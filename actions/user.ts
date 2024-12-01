@@ -27,13 +27,13 @@ export const onAuthenticateUser = async () => {
             data: {
                 email: user.emailAddresses[0].emailAddress,
                 clerkid: user.id,
-                firstname: user.firstName,
-                lastname: user.lastName,
-                image: user.imageUrl,
+                firstname: user.firstName || "",
+                lastname: user.lastName || "",
+                image: user.imageUrl || "",
                 studio: { create: {} },
                 workspace: {
                     create: {
-                        name: `${user.firstName} ${user.lastName}`,
+                        name: `${user.firstName || ""} Workspace`,
                         type: "PERSONAL"
                     }
                 },
@@ -48,7 +48,6 @@ export const onAuthenticateUser = async () => {
                 }
             }
         })
-        console.log(newUser, "newUser");
         if (newUser) return { status: 201, data: newUser, message: "User created successfully" };
         return { status: 400, message: "Failed to create user" }
     } catch (error) {
@@ -56,6 +55,8 @@ export const onAuthenticateUser = async () => {
         return { status: 500, message: "Internal Server Error" }
     }
 }
+
+
 
 export const getNotifications = async () => {
     try {
@@ -120,3 +121,4 @@ export const searchUsers = async (query: string) => {
         return { status: 500, data: undefined }
     }
 }
+

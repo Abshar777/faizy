@@ -100,7 +100,7 @@ export const getAllUserVideos = async (workSpaceId: string) => {
 }
 
 
-export const getWorkSpaces = async (workSpaceId: string) => {
+export const getWorkSpaces = async () => {
     try {
         const user = await currentUser();
         if (!user) return { status: 404, message: "user is found" };

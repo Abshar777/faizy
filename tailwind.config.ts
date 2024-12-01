@@ -1,3 +1,4 @@
+import {nextui} from '@nextui-org/theme';
 import type { Config } from "tailwindcss"
 import animate from "tailwindcss-animate";
 
@@ -8,6 +9,7 @@ const config = {
     "./components/**/*.{ts,tsx}",
     "./app/**/*.{ts,tsx}",
     "./src/**/*.{ts,tsx}",
+    "./node_modules/@nextui-org/theme/dist/components/(button|popover|ripple|spinner).js"
   ],
   prefix: "",
   theme: {
@@ -75,7 +77,7 @@ const config = {
       },
     },
   },
-  plugins: [animate],
+  plugins: [animate,nextui()],
 } satisfies Config
 
 export default config

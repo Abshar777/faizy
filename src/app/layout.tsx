@@ -1,44 +1,52 @@
-import type { Metadata } from 'next'
-import localFont from 'next/font/local'
-import { Manrope, DM_Sans } from 'next/font/google'
-import { ClerkProvider } from '@clerk/nextjs'
-
-import './globals.css'
-import { ThemeProvider } from '@/components/theme/theme-provider'
-// import ReactQueryProvider from '@/react-query'
+import type { Metadata } from "next";
+import localFont from "next/font/local";
+import { Manrope, DM_Sans } from "next/font/google";
+import { ClerkProvider } from "@clerk/nextjs";
+import { NextUIProvider } from "@nextui-org/react";
+import "./globals.css";
+import { ThemeProvider } from "@/components/theme/theme-provider";
+import ReactQueryProvider from "@/react-query";
+import { TooltipProvider } from "@/components/ui/tooltip";
 // import { ReduxProvider } from '@/redux/provider'
 
-
-const manrope = DM_Sans({ subsets: ['latin'] })
+const manrope = DM_Sans({ subsets: ["latin"] });
 
 export const metadata: Metadata = {
-  title: 'faizy',
-  description: 'Share AI powered videos with your friends.',
-}
+  title: "faizy",
+  description: "Share AI powered videos with your friends.",
+};
 
 export default function RootLayout({
   children,
 }: Readonly<{
-  children: React.ReactNode
+  children: React.ReactNode;
 }>) {
   return (
     <ClerkProvider>
       <html lang="en">
+        <head>
+          <link
+            href="https://cdn.jsdelivr.net/npm/remixicon@4.5.0/fonts/remixicon.css"
+            rel="stylesheet"
+          />
+        </head>
         <body className={`${manrope.className} bg-[#171717]`}>
           <ThemeProvider
             attribute="class"
             defaultTheme="dark"
             disableTransitionOnChange
           >
-              {/* <ReduxProvider>
-                <ReactQueryProvider> */}
+            {/* <ReduxProvider> */}
+            <NextUIProvider>
+              <ReactQueryProvider>
                 {children}
                 {/* <Toaster /> */}
-              {/* </ReactQueryProvider>
-            </ReduxProvider> */}
+              </ReactQueryProvider>
+            </NextUIProvider>
+            {/* </ReduxProvider> */}
           </ThemeProvider>
         </body>
       </html>
     </ClerkProvider>
-  )
+  );
 }
