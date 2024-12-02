@@ -233,15 +233,18 @@ export const getFolderInfo = async (folderId: string) => {
             return {
                 status: 200,
                 data: folder,
+                message: "Folder fetched successfully",
             }
         return {
             status: 400,
             data: null,
+            message: "Folder not found",
         }
     } catch (error) {
         return {
             status: 500,
             data: null,
+            message: `somthing error happend Error: ${error}`,
         }
     }
 }

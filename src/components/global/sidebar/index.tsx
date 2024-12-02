@@ -123,7 +123,7 @@ const Sidebar = ({ activeWorkspaceId }: Props) => {
                   count._count.notification) ||
                 0
               }
-              selected={item.href === pathname}
+              selected={pathname.includes(item.name)?true:item.name=="library"?true:false}
             />
           ))}
         </ul>
