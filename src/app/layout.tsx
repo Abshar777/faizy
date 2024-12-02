@@ -1,12 +1,11 @@
 import type { Metadata } from "next";
-import localFont from "next/font/local";
-import { Manrope, DM_Sans } from "next/font/google";
+import {  DM_Sans } from "next/font/google";
 import { ClerkProvider } from "@clerk/nextjs";
 import { NextUIProvider } from "@nextui-org/react";
 import "./globals.css";
 import { ThemeProvider } from "@/components/theme/theme-provider";
 import ReactQueryProvider from "@/react-query";
-import { TooltipProvider } from "@/components/ui/tooltip";
+import { Toaster } from 'sonner'
 // import { ReduxProvider } from '@/redux/provider'
 
 const manrope = DM_Sans({ subsets: ["latin"] });
@@ -40,7 +39,7 @@ export default function RootLayout({
             <NextUIProvider>
               <ReactQueryProvider>
                 {children}
-                {/* <Toaster /> */}
+                <Toaster position="bottom-center"   richColors theme="dark" />
               </ReactQueryProvider>
             </NextUIProvider>
             {/* </ReduxProvider> */}

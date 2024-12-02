@@ -201,7 +201,7 @@ export const createFolder = async (workSpaceId: string) => {
             data: {
                 folders: {
                     create: {
-                        name: "Untitled Folder",
+                        name: "Untitled",
                     }
                 }
             },

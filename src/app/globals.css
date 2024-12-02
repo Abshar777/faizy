@@ -81,6 +81,17 @@
 .fade-layer--side {
   mask-image: linear-gradient(to left, rgba(0, 0, 0, 0), rgba(0, 0, 0, 1) 20%);
 }
+.fade-layer-left{
+  mask-image: linear-gradient(to right, 
+    rgba(0, 0, 0, 0) 0%, /* Fully transparent on the left */
+    rgba(0, 0, 0, 1) 20%, /* Fully visible after 20% */
+    rgba(0, 0, 0, 1) 80%, /* Fully visible up to 80% */
+    rgba(0, 0, 0, 0) 100% /* Fully transparent on the right */
+  );
+}
+.fade-layer-right{
+  mask-image: linear-gradient(to right, rgba(0, 0, 0, 0), rgba(0, 0, 0, 1) 20%);
+}
 
 .text-radial {
   background-image: radial-gradient(
@@ -99,4 +110,9 @@
     rgba(0, 0, 0, 0),
     rgba(23, 23, 23, 1)
   );
+}
+
+.errInput{
+  border: 1px solid red !important;
+  outline: 0px transparent;
 }

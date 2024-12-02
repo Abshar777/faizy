@@ -1,4 +1,4 @@
-import { MutationFunction, MutationKey, useMutation, useQueryClient } from "@tanstack/react-query"
+import { MutationFunction, MutationKey, useMutation, useMutationState, useQueryClient } from "@tanstack/react-query"
 import { toast } from "sonner"
 
 export const useMutationData = (mutationKey: MutationKey,
@@ -10,16 +10,35 @@ export const useMutationData = (mutationKey: MutationKey,
     const { mutate, isPending } = useMutation({
         mutationKey,
         mutationFn,
+        onError(error) {
+            toast.error(error.message?.toString())
+        },
         onSuccess(data) {
             // if (queryKey) client.invalidateQueries({ queryKey: [queryKey] as unknown as readonly unknown[] })
             if (onSuccess) onSuccess(data);
-            toast.success(data.message, {
-                description: data.description
-            })
+            if (data.status === 200) return toast.success(data.message)
+            toast.error(data.message)
         },
         onSettled: async () => {
-            return await client.invalidateQueries({ queryKey: [queryKey]})
+            return await client.invalidateQueries({ queryKey: [queryKey] })
         }
     })
     return { mutate, isPending }
+}
+
+
+export const useMutationDataState=(mutationKey:MutationKey)=>{
+    const data=useMutationState({
+        filters:{
+            mutationKey
+        },
+        select(mutation){
+            return {
+                variables: mutation.state.variables as any,
+                status: mutation.state.status,
+            };
+        },
+    })
+    const latestVaribales=data[data.length-1];
+    return {latestVaribales}
 }

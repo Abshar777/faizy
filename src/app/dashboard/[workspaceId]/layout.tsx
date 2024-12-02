@@ -2,6 +2,7 @@ import React from "react";
 import { getNotifications, onAuthenticateUser } from "../../../../actions/user";
 import { redirect } from "next/navigation";
 import {
+  getWorkspaceFolders,
   getWorkSpaces,
   verfyAccessToWorkSapce,
 } from "../../../../actions/workspace";
@@ -33,6 +34,12 @@ const layout = async ({ children, params: { workspaceId } }: Props) => {
   await query.prefetchQuery({
     queryKey: ["user-workspaces"],
     queryFn: () => getWorkSpaces(),
+  });
+
+
+  await query.prefetchQuery({
+    queryKey: ["workspace-folders"],
+    queryFn: () => getWorkspaceFolders(workspaceId),
   });
 
   await query.prefetchQuery({
