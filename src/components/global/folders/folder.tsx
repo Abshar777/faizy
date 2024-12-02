@@ -87,6 +87,7 @@ const Folder = ({ name, id, optimistic=false, count }: Props) => {
           onClick={(e) => e.stopPropagation()}
           className="flex flex-col items-start"
         >
+            
           {onRename ? (
             <>
               <Input
