@@ -2,6 +2,7 @@ import React from "react";
 import { getNotifications, onAuthenticateUser } from "../../../../actions/user";
 import { redirect } from "next/navigation";
 import {
+  getAllUserVideos,
   getWorkspaceFolders,
   getWorkSpaces,
   verfyAccessToWorkSapce,
@@ -45,6 +46,10 @@ const layout = async ({ children, params: { workspaceId } }: Props) => {
   await query.prefetchQuery({
     queryKey: ["user-notifications"],
     queryFn: () => getNotifications(),
+  });
+  await query.prefetchQuery({
+    queryKey: ["folder-videos"],
+    queryFn: () => getAllUserVideos(workspaceId),
   });
 
   return (

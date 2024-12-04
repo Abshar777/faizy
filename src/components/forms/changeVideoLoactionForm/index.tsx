@@ -1,15 +1,25 @@
+"use client";
 import { Label } from "@/components/ui/label";
 import { Separator } from "@/components/ui/separator";
 import { useMoveVideos } from "@/hooks/useFolders";
 import { Button } from "@nextui-org/button";
 import { Skeleton } from "@nextui-org/skeleton";
-import React from "react";
-
+import React, { useEffect, useRef } from "react";
+import {
+  Select,
+  SelectContent,
+  SelectGroup,
+  SelectItem,
+  SelectLabel,
+  SelectTrigger,
+  SelectValue,
+} from "@/components/ui/select";
+import { DialogClose } from "@/components/ui/dialog";
 interface Props {
   videoId: string;
-  currentFolder?: string;
+  currentFolder: string;
   currentWorkspace: string;
-  currentFolderName?: string;
+  currentFolderName: string;
 }
 
 const ChangeVideoLocation = ({
@@ -19,86 +29,100 @@ const ChangeVideoLocation = ({
   currentFolderName,
 }: Props) => {
   const {
-    errors,
+    isSuccess,
     onFormSubmit,
-    register,
-    fetchFolders,
     isFetching,
     folders,
     isPending,
     workspaces,
     isFolders,
-  } = useMoveVideos(videoId, currentWorkspace);
-  const folder = folders.find((f) => f.id === currentFolder);
+    setValue,
+  } = useMoveVideos(videoId, currentWorkspace, currentFolder);
+  // const folder = folders.find((f) => f.id === currentFolder);
   const workspace = workspaces.find((f) => f.id === currentWorkspace);
-  console.log(workspace, folder,workspaces,folders);
+  const ref=useRef<HTMLButtonElement>(null);
+  useEffect(() => {
+    if (isSuccess) ref.current?.click();
+  }, [isSuccess]);
+
   return (
     <form className="flex flex-col gap-y-5" onSubmit={onFormSubmit}>
-      <div className="boder-[1px] rounded-xl p-5">
+      <div className="boder-[1px] rounded-xl px-5 py-3">
         <h2 className="text-xs text-[#a4a4a4]">Current Workspace</h2>
         {workspace && <p>{workspace.name}</p>}
         <h2 className="text-xs text-[#a4a4a4] mt-4">Current Folder</h2>
-        {folder ? <p>{folder.name}</p> : "This video has no folder"}
+        {currentFolderName ? (
+          <p>{currentFolderName}</p>
+        ) : (
+          "This video has no folder"
+        )}
       </div>
       <Separator orientation="horizontal" />
       <div className="flex flex-col gap-y-5 p-5 border-[1px] rounded-xl">
         <h2 className="text-xs text-[#a4a4a4]">To</h2>
         <Label className="flex-col gap-y-2 flex">
-          <p className="text-xs">Workspace</p>
-          <select
-            className="rounded-xl text-base bg-transparent"
-            {...register("workspace_id")}
-          >
-            {workspaces.map((space) => (
-              <option
-                key={space.id}
-                className="text-[#a4a4a4]"
-                value={space.id}
-              >
-                {space.name}
-              </option>
-            ))}
-          </select>
+          <p className="text-sm">Workspaces</p>
+          <Select onValueChange={(value) => setValue("workspaceId", value)}>
+            <SelectTrigger className="w-full">
+              <SelectValue placeholder={workspace?.name} />
+            </SelectTrigger>
+            <SelectContent>
+              <SelectGroup>
+                <SelectLabel>Workspaces</SelectLabel>
+                <Separator className="mb-1" />
+                {workspaces.map((space) => (
+                  <SelectItem
+                    className="text-muted-foreground"
+                    key={space.id}
+                    value={space.id}
+                  >
+                    {space.name}
+                  </SelectItem>
+                ))}
+              </SelectGroup>
+            </SelectContent>
+          </Select>
         </Label>
         {isFetching ? (
           <Skeleton className="w-full h-[40px] rounded-xl" />
         ) : (
           <Label className="flex flex-col gap-y-2">
-            <p className="text-xs">Folders in this workspace</p>
+            <p className="text-sm">Folders in this workspace</p>
             {isFolders && isFolders.length > 0 ? (
-              <select
-                {...register("folder_id")}
-                className="rounded-xl bg-transparent text-base"
-              >
-                {isFolders.map((folder, key) =>
-                  key === 0 ? (
-                    <option
-                      className="text-[#a4a4a4]"
-                      key={folder.id}
-                      value={folder.id}
-                    >
-                      {folder.name}
-                    </option>
-                  ) : (
-                    <option
-                      className="text-[#a4a4a4]"
-                      key={folder.id}
-                      value={folder.id}
-                    >
-                      {folder.name}
-                    </option>
-                  )
-                )}
-              </select>
+              <Select onValueChange={(value) => setValue("folderId", value)}>
+                <SelectTrigger className="w-full">
+                  <SelectValue placeholder={currentFolderName} />
+                </SelectTrigger>
+                <SelectContent>
+                  <SelectGroup>
+                    <SelectLabel>Folders</SelectLabel>
+                    <Separator className="mb-1" />
+                    {isFolders.map((folder, key) => (
+                      <SelectItem
+                        className="text-muted-foreground"
+                        key={folder.id}
+                        value={folder.id}
+                      >
+                        {folder.name}
+                      </SelectItem>
+                    ))}
+                  </SelectGroup>
+                </SelectContent>
+              </Select>
             ) : (
-              <p className="text-[#a4a4a4] text-sm">
+              <p className="text-muted-foreground text-sm">
                 This workspace has no folders
               </p>
             )}
           </Label>
         )}
       </div>
-      <Button isLoading={isPending} type="submit">
+      <DialogClose ref={ref} ></DialogClose>
+        <Button
+          isLoading={isPending}
+        className="bg-secondary-foreground text-secondary font-semibold hover:bg-secondary-foreground/80"
+        type="submit"
+      >
         Transfer
       </Button>
     </form>

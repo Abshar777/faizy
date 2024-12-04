@@ -9,7 +9,7 @@ const useZodForm = (
     mutation: UseMutateFunction,
     defaultValues?: z.infer<typeof schema>
 ) => {
-    const { register, watch, handleSubmit, formState: { errors }, reset } = useForm<z.infer<typeof schema>>({
+    const { register, watch, handleSubmit, formState: { errors }, reset,setValue } = useForm<z.infer<typeof schema>>({
         resolver: zodResolver(schema),
         defaultValues
     });
@@ -20,7 +20,7 @@ const useZodForm = (
                 if (error) toast.error(error.message?.toString());
             });
         });
-    return { register, watch, handleSubmit, errors, reset, onFormSubmit }
+    return { register, watch, handleSubmit, errors, reset, onFormSubmit,setValue }
 }
 
 export default useZodForm;

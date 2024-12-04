@@ -13,6 +13,7 @@ import {
 import VideoCardMenu from "./VideoCardMenu";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { Dot, Share2, User } from "lucide-react";
+import { CopyLink } from "./copyLink";
 
 interface Props {
   User: {
@@ -81,11 +82,9 @@ const VideoCard = (props: Props) => {
             currentWorkspace={props.workspaceId || ""}
             currentFolder={props.Folder?.id || ""}
           />
-          {/* 
-          <CopyLink
-            className="p-[5px] h-5 bg-hover:bg-transparent bg-[#252525]"
-            videoId={props.id}
-          /> */}
+        </div>
+        <div className="absolute z-50 bottom-3 left-3" >
+          <CopyLink videoId={props.id} />
         </div>
         <Image
           isLoading
@@ -107,7 +106,7 @@ const VideoCard = (props: Props) => {
         </video>
       </CardBody>
       <CardFooter className="  flex flex-col items-start pt-1  px-3 z-20">
-        <h2 className="text-sm  font-semibold text-[#BDBDBD]">{props.title}</h2>
+        <h2 className="text-sm capitalize  font-semibold text-[#BDBDBD]">{props.title}</h2>
         <div className="flex gap-x-2 items-center mt-1 ">
           <Avatar className=" w-8 h-8 flex items-center justify-center ">
             <AvatarImage src={props.User?.image as string} />
@@ -115,11 +114,11 @@ const VideoCard = (props: Props) => {
               {props.User?.firstname?.slice(0, 2)}
             </AvatarFallback>
           </Avatar>
-          <div>
-            <p className="capitalize text-xs text-[#BDBDBD]">
+          <div className="flex flex-col gap-y-0">
+            <p className="capitalize tracking-tighter text-xs text-[#BDBDBD]">
               {props.User?.firstname} {props.User?.lastname}
             </p>
-            <p className="text-[#6d6b6b]  text-xs flex items-center   ">
+            <p className="text-[#6d6b6b] -mt-1  text-xs flex items-center   ">
               <Dot className="-ml-2" />{" "}
               <span className="-ml-1">
                 {daysAgo === 0 ? "Today" : `${daysAgo}d ago`}
@@ -127,8 +126,13 @@ const VideoCard = (props: Props) => {
             </p>
           </div>
         </div>
-        <div className="flex gap-x items-center ">
-          <Button size="sm" isIconOnly className="p-1 rounded-full " variant="light">
+        <div className="flex gap-x items-center -ml-2">
+          <Button
+            size="sm"
+            isIconOnly
+            className="p-1 rounded-full "
+            variant="light"
+          >
             <Share2 fill="#9D9D9D" className="text-[#9D9D9D]" size={12} />
           </Button>
           <p className="text-xs text-[#9D9D9D] capitalize">

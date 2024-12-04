@@ -1,5 +1,5 @@
 "use client";
-import React from "react";
+import React, { useEffect } from "react";
 import Image from "next/image";
 import {
   Select,
@@ -28,13 +28,16 @@ import { Button } from "@/components/ui/button";
 import { Sheet, SheetContent, SheetTrigger } from "@/components/ui/sheet";
 import InfoBar from "../infobar";
 import { cn } from "@/lib/utils";
+import { useAppDispatch } from "@/store/store";
+import { WORKSPACES } from "@/store/slices/workspace";
 interface Props {
   activeWorkspaceId: string;
 }
 
 const Sidebar = ({ activeWorkspaceId }: Props) => {
   const router = useRouter();
-  const { data } = useQueryData(["user-workspaces"], getWorkSpaces);
+  const dispatch = useAppDispatch();
+  const { data,isFetched } = useQueryData(["user-workspaces"], getWorkSpaces);
   const { data: notifications } = useQueryData(
     ["user-notifications"],
     getWorkSpaces
@@ -48,7 +51,9 @@ const Sidebar = ({ activeWorkspaceId }: Props) => {
     (ws) => ws.id === activeWorkspaceId
   );
   const menuItems = MENU_ITEMS(activeWorkspaceId);
-
+  useEffect(() => {
+    if (isFetched && workspaces) dispatch(WORKSPACES({ workspaces: workspaces.workspace }));
+  }, [isFetched, workspaces]);
   const SidebarSection = (
     <div className="bg-[#111111] flex-none p-4 h-screen w-[250px] flex-col relative flex gap-3 items-center overflow-hidden">
       <div className="bg-[#111111] px-4 py-6 gap-3 flex justify-center w-full items-center mb-4 absolute top-0 left-0 right-0">

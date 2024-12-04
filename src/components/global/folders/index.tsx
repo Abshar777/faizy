@@ -10,17 +10,24 @@ import { getWorkspaceFolders } from "../../../../actions/workspace";
 import { useMutationDataState } from "@/hooks/useMutation";
 import { FoldersProps } from "@/types/index.type";
 import { Skeleton } from "@nextui-org/skeleton";
+import { useAppDispatch } from "@/store/store";
+import { FOLDERS } from "@/store/slices/folders";
+import Videos from "../videos";
 
 interface Props {
   workspaceId: string;
 }
 
 const Folders = ({ workspaceId }: Props) => {
+  const dispatch = useAppDispatch();
   const { data, isFetched } = useQueryData(["workspace-folders"], () =>
     getWorkspaceFolders(workspaceId)
   );
   const { latestVaribales } = useMutationDataState(["create-folder"]);
   let { data: folders,status } = data as FoldersProps;
+  if(isFetched&&folders){
+    dispatch(FOLDERS({folders:folders}));
+  }
   return (
     <div className="flex flex-col gap-2 px-3">
       <div className="flex    items-center justify-between">
@@ -59,13 +66,18 @@ const Folders = ({ workspaceId }: Props) => {
                 />
               )}
               {folders.map((folder) => (
-                <Folder key={folder.id} name={folder.name} id={folder.id} />
+                <Folder key={folder.id} count={folder._count.videos || 0} name={folder.name} id={folder.id} />
               ))}
             </>
           )}
         </div>
         <ScrollBar className="opacity-0" orientation="horizontal" />
       </ScrollArea>
+      <Videos
+        workspaceId={workspaceId}
+        folderId={workspaceId}
+        videosKey="folder-videos"
+      />
     </div>
   );
 };

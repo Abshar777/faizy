@@ -7,7 +7,7 @@ export const useMutationData = (mutationKey: MutationKey,
     onSuccess?: (data: any) => void
 ) => {
     const client = useQueryClient()
-    const { mutate, isPending } = useMutation({
+    const { mutate, isPending,isSuccess } = useMutation({
         mutationKey,
         mutationFn,
         onError(error) {
@@ -23,7 +23,7 @@ export const useMutationData = (mutationKey: MutationKey,
             return await client.invalidateQueries({ queryKey: [queryKey] })
         }
     })
-    return { mutate, isPending }
+    return { mutate, isPending,isSuccess }
 }
 
 

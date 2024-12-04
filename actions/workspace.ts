@@ -42,6 +42,7 @@ export const getWorkspaceFolders = async (workSpaceId: string) => {
                 workSpaceId,
             },
             include: {
+                
                 _count: {
                     select: {
                         videos: true,
@@ -266,10 +267,10 @@ export const moveVideoLocation = async (
                 workSpaceId,
             },
         })
-        if (location) return { status: 200, data: 'folder changed successfully' }
-        return { status: 404, data: 'workspace/folder not found' }
+        if (location) return { status: 200, message: 'folder changed successfully' }
+        return { status: 404, message: 'workspace/folder not found' }
     } catch (error) {
-        return { status: 500, data: 'Oops! something went wrong' }
+        return { status: 500, message: 'Oops! something went wrong' }
     }
 }
 

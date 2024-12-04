@@ -2,13 +2,14 @@
 import { usePathname } from "next/navigation";
 import { useRouter } from "nextjs-toploader/app";
 import FolderDuotone from "@/components/icons/folder-duotone";
-import React, { useEffect, useRef, useState } from "react";
+import React, { useRef, useState } from "react";
 import { cn } from "@/lib/utils";
 import { Button } from "@nextui-org/button";
 import { Input } from "@/components/ui/input";
 import { useMutationData } from "@/hooks/useMutation";
 import { renameFolders } from "../../../../actions/workspace";
 import capitalizeWords from "@/util/captilizeString";
+
 
 interface Props {
   name: string;
@@ -19,6 +20,7 @@ interface Props {
 
 const Folder = ({ name, id, optimistic=false, count }: Props) => {
   const router = useRouter();
+
   const pathname = usePathname();
   const inputRef = useRef<HTMLInputElement>(null);
   const [onRename, setOnRename] = useState(false);
