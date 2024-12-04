@@ -5,7 +5,7 @@ import { getFolderInfo } from "../../../../actions/workspace";
 import { FolderProp } from "@/types/index.type";
 import { Button } from "@nextui-org/button";
 import { ChevronLeftIcon, TrashIcon } from "lucide-react";
-import { useRouter } from "next/navigation";
+import { useRouter } from 'nextjs-toploader/app';
 
 interface Props {
   folderId: string;

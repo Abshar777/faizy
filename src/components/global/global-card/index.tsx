@@ -9,15 +9,17 @@ import {
 import { CanvasRevealEffect } from "@/components/ui/canvas-reveal-effect";
 import React, { MouseEvent as ReactMouseEvent, useState } from "react";
 import { motion, useMotionTemplate, useMotionValue } from "framer-motion";
+import { cn } from "@/lib/utils";
 
 type Props = {
   title: string;
   description: string;
   children?: React.ReactNode;
   footer?: React.ReactNode;
+  className?:string
 };
 
-const GlobalCard = ({ title, children, description, footer }: Props) => {
+const GlobalCard = ({ title, children, description, footer,className }: Props) => {
   const mouseX = useMotionValue(0);
   const mouseY = useMotionValue(0);
   function handleMouseMove({
@@ -39,7 +41,7 @@ const GlobalCard = ({ title, children, description, footer }: Props) => {
       onMouseMove={handleMouseMove}
       onMouseEnter={handleMouseEnter}
       onMouseLeave={handleMouseLeave}
-      className="bg-gradient-to-tr cursor-pointer group/spotlight relative from-background/10 to-primary/5 "
+      className={cn("bg-gradient-to-tr cursor-pointer group/spotlight relative from-background/10 to-primary/5 ")}  
     >
       <motion.div
         className="pointer-events-none absolute z-0 -inset-px rounded-md opacity-0 transition  duration-300 group-hover/spotlight:opacity-100"

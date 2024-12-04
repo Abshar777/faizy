@@ -84,6 +84,7 @@ export const getAllUserVideos = async (workSpaceId: string) => {
                         id: true,
                         firstname: true,
                         lastname: true,
+                        image: true,
                     }
                 }
 

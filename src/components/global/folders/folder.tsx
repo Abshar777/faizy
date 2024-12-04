@@ -1,5 +1,6 @@
 "use client";
-import { usePathname, useRouter } from "next/navigation";
+import { usePathname } from "next/navigation";
+import { useRouter } from "nextjs-toploader/app";
 import FolderDuotone from "@/components/icons/folder-duotone";
 import React, { useEffect, useRef, useState } from "react";
 import { cn } from "@/lib/utils";
@@ -73,12 +74,13 @@ const Folder = ({ name, id, optimistic=false, count }: Props) => {
   };
   return (
     <Button
+    allowTextSelectionOnPress
       disabled={optimistic}
       isLoading={isPending}
       size="md"
       onClick={handleclick}
       className={cn(optimistic&&"opacity-50",
-        "flex   hover:bg-muted-foreground/20 py-8 px-4   bg-muted-foreground/5 cursor-pointer transition duration-150  justify-between min-w-[250px] max-w-[250px]   rounded-lg  border-[1px] items-center gap-2"
+        "flex   hover:bg-muted-foreground/10 py-8 px-4 ring-white  bg-muted-foreground/5 cursor-pointer transition duration-150  justify-between min-w-[250px] max-w-[250px]   rounded-lg  border-[1px] items-center gap-2"
       )}
     >
       <div className="w-full   bg-transparent flex justify-between">

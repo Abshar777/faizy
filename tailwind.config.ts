@@ -9,7 +9,7 @@ const config = {
     "./components/**/*.{ts,tsx}",
     "./app/**/*.{ts,tsx}",
     "./src/**/*.{ts,tsx}",
-    "./node_modules/@nextui-org/theme/dist/components/(button|skeleton|popover|ripple|spinner).js"
+    "./node_modules/@nextui-org/theme/dist/components/(button|card|image|skeleton|popover|ripple|spinner).js"
   ],
   prefix: "",
   theme: {
@@ -69,6 +69,10 @@ const config = {
         "accordion-up": {
           from: { height: "var(--radix-accordion-content-height)" },
           to: { height: "0" },
+        },
+        ripple: {
+          '0%': { transform: 'scale(0)', opacity: '0.75' },
+          '100%': { transform: 'scale(2)', opacity: '0' },
         },
       },
       animation: {

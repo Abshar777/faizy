@@ -10,7 +10,8 @@ import {
   SelectContent,
   SelectItem,
 } from "@/components/ui/select";
-import { useRouter, usePathname } from "next/navigation";
+import { useRouter } from "nextjs-toploader/app";
+import {  usePathname } from "next/navigation";
 import { Separator } from "@/components/ui/separator";
 import { getWorkSpaces } from "../../../../actions/workspace";
 import { useQueryData } from "@/hooks/useQueryData";
@@ -26,6 +27,7 @@ import GlobalCard from "../global-card";
 import { Button } from "@/components/ui/button";
 import { Sheet, SheetContent, SheetTrigger } from "@/components/ui/sheet";
 import InfoBar from "../infobar";
+import { cn } from "@/lib/utils";
 interface Props {
   activeWorkspaceId: string;
 }
@@ -48,7 +50,7 @@ const Sidebar = ({ activeWorkspaceId }: Props) => {
   const menuItems = MENU_ITEMS(activeWorkspaceId);
 
   const SidebarSection = (
-    <div className="bg-[#111111] flex-none p-4 h-full w-[250px] flex-col relative flex gap-3 items-center overflow-hidden">
+    <div className="bg-[#111111] flex-none p-4 h-screen w-[250px] flex-col relative flex gap-3 items-center overflow-hidden">
       <div className="bg-[#111111] px-4 py-6 gap-3 flex justify-center w-full items-center mb-4 absolute top-0 left-0 right-0">
         <Image src="/Faizy.svg" alt="Faizy" width={70} height={70} />
       </div>
@@ -123,15 +125,21 @@ const Sidebar = ({ activeWorkspaceId }: Props) => {
                   count._count.notification) ||
                 0
               }
-              selected={pathname.includes(item.name)?true:item.name=="library"?true:false}
+              selected={
+                pathname.includes(item.name)
+                  ? true
+                  : item.name == "library"
+                  ? true
+                  : false
+              }
             />
           ))}
         </ul>
       </nav>
-      <Separator className="w-4/5" />
-      <p className="w-full text-primary/90 font-bold mt-4">Workspaces</p>
+      <Separator className="w-[90%]" />
+      <p className="w-full text-primary/90 font-bold mt-4 px-1">Workspaces</p>
 
-      <nav className="w-full">
+      <nav className="w-full px-1">
         {workspaces.members.length == 0 &&
           workspaces.workspace.length === 1 && (
             <div className="w-full justify-center items-center ">
@@ -142,7 +150,14 @@ const Sidebar = ({ activeWorkspaceId }: Props) => {
               </p>
             </div>
           )}
-        <ScrollArea className="h-[130px] py-1  fade-layer">
+        <ScrollArea
+          className={cn(
+            " py-1  fade-layer",
+            workspaces.subscription?.plan !== "FREE"
+              ? "h-[130px]"
+              : "h-[20%] py-5"
+          )}
+        >
           <ul>
             {workspaces.workspace.length > 0 &&
               workspaces.workspace.map(
@@ -181,9 +196,10 @@ const Sidebar = ({ activeWorkspaceId }: Props) => {
           </ul>
         </ScrollArea>
       </nav>
-      <Separator className="w-4/5" />
+      <Separator className="w-[90%]" />
       {workspaces.subscription?.plan == "FREE" && (
         <>
+          <div className="fixed  bottom-0 p-4">
           <GlobalCard
             title="Upgrade to PRO plan"
             description="Upgrade to PRO plan to create more workspaces"
@@ -196,6 +212,7 @@ const Sidebar = ({ activeWorkspaceId }: Props) => {
               </Button>
             }
           ></GlobalCard>
+          </div>
         </>
       )}
     </div>

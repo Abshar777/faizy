@@ -29,6 +29,7 @@ export type NotificationProps = {
 }
 
 
+
 export type FoldersProps = {
   status: number
   data: ({
@@ -52,3 +53,49 @@ export type FolderProp = {
     };
   };
 };
+
+export type VideosProps = {
+  status: number;
+  data: VideoProps[];
+};
+
+export type VideoProps = {
+  User: {
+    firstname: string | null
+    lastname: string | null
+    image: string | null
+  } | null
+  id: string
+  processing: boolean
+  Folder: {
+    id: string
+    name: string
+  } | null
+  createdAt: Date
+  title: string | null
+  source: string
+}
+
+
+export type initialFolderStateProps = {
+  folders:TFolder[]
+}
+
+export type TFolder = ({
+  _count: {
+    videos: number
+  }
+} & {
+  id: string
+  name: string
+  createdAt: Date
+  workSpaceId: string | null
+})
+
+export type initialWorkSpaceStateProps = {
+  workspaces: {
+    id: string,
+    name: string,
+    type: "PERSONAL" | "PUBLIC"
+  }[]
+}
