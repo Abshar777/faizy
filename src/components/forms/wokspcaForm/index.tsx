@@ -1,12 +1,31 @@
-import FormGenerator from '@/components/global/form-generator';
+"use client";
+import FormGenerator from "@/components/global/form-generator";
+import { DialogClose } from "@/components/ui/dialog";
 import { useCreateWokspace } from "@/hooks/useCreateWokspace";
-import { Button } from '@nextui-org/button';
-import React from "react";
+import { Button } from "@nextui-org/button";
+import React, { useEffect, useRef } from "react";
+import { getWorkSpaces } from "../../../../actions/workspace";
+import { useQueryClient } from "@tanstack/react-query";
 
 interface Props {}
 
 const WorkspaceForm = ({}: Props) => {
-  const { errors, onFormSubmit, register, isPending } = useCreateWokspace();
+  const client = useQueryClient();
+  const { errors, onFormSubmit, register, isPending, isSuccess } =
+    useCreateWokspace();
+  const ref = useRef<HTMLButtonElement>(null);
+  useEffect(() => {
+    if (isSuccess) {
+      (async () => {
+        await client.invalidateQueries({
+          queryKey: ["user-workspace"],
+          exact: true,
+        });
+        ref.current?.click();
+      })();
+    }
+  }, [isSuccess]);
+
   return (
     <div>
       <form onSubmit={onFormSubmit} className="flex flex-col gap-4">
@@ -18,7 +37,13 @@ const WorkspaceForm = ({}: Props) => {
           errors={errors}
           register={register}
         />
-        <Button color="primary" isLoading={isPending} type="submit" disabled={isPending}>
+        <DialogClose ref={ref}></DialogClose>
+        <Button
+          color="primary"
+          isLoading={isPending}
+          type="submit"
+          disabled={isPending}
+        >
           {isPending ? "Creating..." : "Create"}
         </Button>
       </form>

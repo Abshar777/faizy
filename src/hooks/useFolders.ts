@@ -13,11 +13,11 @@ export const useMoveVideos = (videoId: string, currenWorkspace: string, currentF
     const { workspaces } = useAppSelector(state => state.workspace);
     const [isFetching, setIsFetching] = useState(false);
     const [isFolders, setFolders] = useState<TFolder[] | undefined>(undefined);
-    
+
     const prevWorkspaceRef = useRef(currenWorkspace); // Ref to track previous workspace
     const client = useQueryClient()
-    const onSuccess = async(data:any)=>{
-        await client.invalidateQueries({queryKey:["workspace-folders"]})
+    const onSuccess = async (data: any) => {
+        await client.invalidateQueries({ queryKey: ["workspace-folders"] })
     }
 
 
@@ -29,7 +29,7 @@ export const useMoveVideos = (videoId: string, currenWorkspace: string, currentF
 
     );
 
-    
+
     const { errors, handleSubmit, onFormSubmit, register, watch, setValue } = useZodForm(moveVideoSchema, mutate, {
         folderId: currentFolder,
         workspaceId: currenWorkspace,

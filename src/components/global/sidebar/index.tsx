@@ -11,7 +11,7 @@ import {
   SelectItem,
 } from "@/components/ui/select";
 import { useRouter } from "nextjs-toploader/app";
-import {  usePathname } from "next/navigation";
+import { usePathname } from "next/navigation";
 import { Separator } from "@/components/ui/separator";
 import { getWorkSpaces } from "../../../../actions/workspace";
 import { useQueryData } from "@/hooks/useQueryData";
@@ -24,12 +24,14 @@ import SidebarItems from "./sidebar-items";
 import WorkspacePlaceholder from "./workspaceholder";
 import { ScrollArea } from "@/components/ui/scroll-area";
 import GlobalCard from "../global-card";
-import { Button } from "@/components/ui/button";
+import { Button } from "@nextui-org/button";
 import { Sheet, SheetContent, SheetTrigger } from "@/components/ui/sheet";
 import InfoBar from "../infobar";
 import { cn } from "@/lib/utils";
 import { useAppDispatch } from "@/store/store";
 import { WORKSPACES } from "@/store/slices/workspace";
+import { useMutationDataState } from "@/hooks/useMutation";
+import { useQueryClient } from "@tanstack/react-query";
 interface Props {
   activeWorkspaceId: string;
 }
@@ -37,7 +39,11 @@ interface Props {
 const Sidebar = ({ activeWorkspaceId }: Props) => {
   const router = useRouter();
   const dispatch = useAppDispatch();
-  const { data,isFetched } = useQueryData(["user-workspaces"], getWorkSpaces);
+  const client=useQueryClient();
+  const { data, isFetched,refetch } = useQueryData(["user-workspace"], () => {
+    console.log("stared1aaaa");
+    return getWorkSpaces();
+  });
   const { data: notifications } = useQueryData(
     ["user-notifications"],
     getWorkSpaces
@@ -51,9 +57,16 @@ const Sidebar = ({ activeWorkspaceId }: Props) => {
     (ws) => ws.id === activeWorkspaceId
   );
   const menuItems = MENU_ITEMS(activeWorkspaceId);
+  const { latestVaribales } = useMutationDataState(["user-workspace"]);
   useEffect(() => {
-    if (isFetched && workspaces) dispatch(WORKSPACES({ workspaces: workspaces.workspace }));
+    if (isFetched && workspaces)
+      dispatch(WORKSPACES({ workspaces: workspaces.workspace }));
   }, [isFetched, workspaces]);
+  useEffect(() => {
+    if (latestVaribales) {
+      dispatch(WORKSPACES({ workspaces: [latestVaribales.variables] }));
+    }
+  }, [latestVaribales]);
   const SidebarSection = (
     <div className="bg-[#111111] flex-none p-4 h-screen w-[250px] flex-col relative flex gap-3 items-center overflow-hidden">
       <div className="bg-[#111111] px-4 py-6 gap-3 flex justify-center w-full items-center mb-4 absolute top-0 left-0 right-0">
@@ -102,12 +115,15 @@ const Sidebar = ({ activeWorkspaceId }: Props) => {
         workspaces.subscription?.plan == "PRO" && (
           <Modal
             trigger={
-              <span className="text-sm cursor-pointer flex items-center gap-2 transition-all duration-[.3] ease-in justify-center bg-neutral-700/30 border-t border-t-neutral-500/20 hover:bg-neutral-700/60 p-[5px] w-full rounded-sm ">
+              <Button
+                size="sm"
+                className="text-sm cursor-pointer flex items-center gap-2 transition-all duration-[.3] ease-in justify-center bg-neutral-700/30 border-t border-t-neutral-500/20 hover:bg-neutral-700/60 p-[5px] w-full rounded-sm "
+              >
                 <span className="text-neutral-400 font-semibold text-xs">
                   invite Workspace
                 </span>{" "}
                 <PlusIcon className="w-4 h-4" />
-              </span>
+              </Button>
             }
             title="Create Workspace"
             description="Create a new workspace"
@@ -116,6 +132,7 @@ const Sidebar = ({ activeWorkspaceId }: Props) => {
           </Modal>
         )}
       <p className="w-full text-primary/90 font-bold mt-4 px-1">Menu</p>
+      {/* menu */}
       <nav className="w-full">
         <ul className="w-full ">
           {menuItems.map((item, index) => (
@@ -142,8 +159,11 @@ const Sidebar = ({ activeWorkspaceId }: Props) => {
         </ul>
       </nav>
       <Separator className="w-[90%]" />
-      <p className="w-full text-primary/90 font-bold mt-4 px-1">Workspaces</p>
-
+      <div className="w-full flex items-center justify-between">
+        <p className="w-full text-primary/90 font-bold mt-4 px-1">Workspaces</p>
+        
+      </div>
+      {/* members and workspaces */}
       <nav className="w-full px-1">
         {workspaces.members.length == 0 &&
           workspaces.workspace.length === 1 && (
@@ -151,7 +171,7 @@ const Sidebar = ({ activeWorkspaceId }: Props) => {
               <p className="text-muted-foreground text-xs">
                 {workspaces.subscription?.plan === "FREE"
                   ? "You are on free plan, upgrade to PRO plan to create more workspaces"
-                  : "No "}
+                  : " "}
               </p>
             </div>
           )}
@@ -164,6 +184,22 @@ const Sidebar = ({ activeWorkspaceId }: Props) => {
           )}
         >
           <ul>
+            {latestVaribales && latestVaribales.status === "pending" && (
+              <SidebarItems
+                title={latestVaribales.variables.name}
+                key={latestVaribales.variables.id}
+                icon={
+                  <WorkspacePlaceholder>
+                    {latestVaribales.variables.name.slice(0, 2)}
+                  </WorkspacePlaceholder>
+                }
+                href={`/dashboard/${latestVaribales.variables.id}`}
+                selected={
+                  pathname === `/dashboard/${latestVaribales.variables.id}`
+                }
+                optimistic={true}
+              />
+            )}
             {workspaces.workspace.length > 0 &&
               workspaces.workspace.map(
                 (e) =>
@@ -202,21 +238,20 @@ const Sidebar = ({ activeWorkspaceId }: Props) => {
         </ScrollArea>
       </nav>
       <Separator className="w-[90%]" />
+
+      {/*subscription part */}
       {workspaces.subscription?.plan == "FREE" && (
         <>
           <div className="fixed  bottom-0 p-4">
-          <GlobalCard
-            title="Upgrade to PRO plan"
-            description="Upgrade to PRO plan to create more workspaces"
-            footer={
-              <Button
-                variant={"secondary"}
-                className="w-full bg-muted-foreground/10 uppercase border-t hover:bg-background/30 backdrop-blur-lg active:scale-[.9] transition-all duration-[.3] ease-in"
-              >
-                Upgrade
-              </Button>
-            }
-          ></GlobalCard>
+            <GlobalCard
+              title="Upgrade to PRO plan"
+              description="Upgrade to PRO plan to create more workspaces"
+              footer={
+                <Button className="w-full bg-muted-foreground/10 uppercase border-t hover:bg-background/30 backdrop-blur-lg active:scale-[.9] transition-all duration-[.3] ease-in">
+                  Upgrade
+                </Button>
+              }
+            ></GlobalCard>
           </div>
         </>
       )}
@@ -228,7 +263,7 @@ const Sidebar = ({ activeWorkspaceId }: Props) => {
       <div className="md:hidden fixed my-4">
         <Sheet>
           <SheetTrigger asChild className="ml-2">
-            <Button variant={"ghost"} className="mt-[2px]">
+            <Button isIconOnly variant="light" className="mt-[2px]">
               <Menu />
             </Button>
           </SheetTrigger>

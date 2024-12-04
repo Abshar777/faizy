@@ -20,19 +20,24 @@ interface Props {
 
 export const CopyLink = ({ videoId, className, variant }: Props) => {
   const [isDisabled, setIsDisabled] = useState(false);
-  const onCopyClipBoard = (e: React.MouseEvent<HTMLButtonElement>) => {
+  const onCopyClipBoard = async (e: React.MouseEvent<HTMLButtonElement>) => {
+   try {
     setIsDisabled(true);
     e.stopPropagation();
-    navigator.clipboard.writeText(
+    await navigator.clipboard.writeText(
       `${window.location.origin}/preview/${videoId}`
     );
-    toast.info("Link Copied", {
+    toast.success("Link Copied", {
       description: "You can now share the link with others",
     });
     setTimeout(() => {
       setIsDisabled(false);
       toast.dismiss();
     }, 2000);
+    } catch (error) {
+      setIsDisabled(false);
+      toast.error("Failed to copy link");
+    }
   };
   
   return (

@@ -20,12 +20,13 @@ interface Props {
 
 const Folders = ({ workspaceId }: Props) => {
   const dispatch = useAppDispatch();
-  const { data, isFetched } = useQueryData(["workspace-folders"], () =>
-    getWorkspaceFolders(workspaceId)
-  );
+  const { data, isFetched } = useQueryData(["workspace-folders"], () => {
+    console.log("stared3");
+    return getWorkspaceFolders(workspaceId);
+  });
   const { latestVaribales } = useMutationDataState(["create-folder"]);
-  let { data: folders,status } = data as FoldersProps;
-  if(isFetched&&folders){
+  let { data: folders, status } = data as FoldersProps;
+  if (isFetched && folders) {
     dispatch(FOLDERS({folders:folders}));
   }
   return (

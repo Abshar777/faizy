@@ -11,7 +11,7 @@ interface Props {
 }
 
 const CreateFolder = ({ workspaceId }: Props) => {
-  const isMobile = useIsMobile();
+  const isMobile = useIsMobile(1000);
   const { onCreateNewFolder } = useCreateFolder(workspaceId);
   return (
     <Tooltip
@@ -28,7 +28,7 @@ const CreateFolder = ({ workspaceId }: Props) => {
         className="bg-muted-foreground/5 hover:bg-muted-foreground/10  text-sm text-muted-foreground flex items-center gap-2 py-6  rounded-2xl"
       >
         <FolderPlusDuotine />
-        {!isMobile && "Create Workspace"}
+        {!isMobile && "Create Folder"}
       </Button>
     </Tooltip>
   );

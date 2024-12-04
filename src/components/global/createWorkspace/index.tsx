@@ -8,12 +8,12 @@ import FolderPlusDuotine from "@/components/icons/folder-plus-duotone";
 import WorkspaceForm from "@/components/forms/wokspcaForm";
 import { Button } from "@nextui-org/button";
 import { useIsMobile } from "@/hooks/use-mobile";
-import { Tooltip } from "@nextui-org/tooltip";
+
 
 interface Props {}
 
 const CreateWorkspace = (props: Props) => {
-  const { data } = useQueryData(["user-workspaces"], getWorkSpaces);
+  const { data,refetch } = useQueryData(["user-workspace"], getWorkSpaces);
   const isMobile = useIsMobile();
   const { data: plan } = data as {
     status: number;
@@ -23,6 +23,7 @@ const CreateWorkspace = (props: Props) => {
       } | null;
     };
   };
+  
   if (plan.subscription?.plan === "PRO") {
     return (
       <Modal

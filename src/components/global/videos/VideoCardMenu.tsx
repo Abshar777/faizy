@@ -22,7 +22,7 @@ const VideoCardMenu = ({
   return (
     <Modal
       trigger={
-        <Button isIconOnly size="sm" className="">
+        <Button onClick={(e)=>e.stopPropagation()} isIconOnly size="sm" className="">
           <TbArrowsMove />
         </Button>
       }

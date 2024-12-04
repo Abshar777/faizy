@@ -16,7 +16,7 @@ export const prefetchWorkspaceFolders = async (workspaceId: string) => {
         queryFn: () => getAllUserVideos(workspaceId)
     })
     await queryClient.prefetchQuery({
-        queryKey: ['user-workspaces'],
+        queryKey: ['user-workspace'],
         queryFn: () => getWorkSpaces(),
     })
 

@@ -33,14 +33,17 @@ const layout = async ({ children, params: { workspaceId } }: Props) => {
   const query = new QueryClient();
 
   await query.prefetchQuery({
-    queryKey: ["user-workspaces"],
-    queryFn: () => getWorkSpaces(),
+    queryKey: ["user-workspace"],
+    queryFn: () => {
+      console.log("stared2");
+      return getWorkSpaces();
+    },
   });
-
 
   await query.prefetchQuery({
     queryKey: ["workspace-folders"],
     queryFn: () => getWorkspaceFolders(workspaceId),
+
   });
 
   await query.prefetchQuery({

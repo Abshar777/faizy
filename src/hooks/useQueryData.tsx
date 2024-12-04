@@ -10,7 +10,7 @@ export const useQueryData = (
   queryFn: QueryFunction,
   enabled?: Enabled
 ) => {
-  const { data, isPending, isFetched, refetch, isFetching } = useQuery({
+  const { data, isPending, isFetched, refetch, isFetching, } = useQuery({
     queryKey,
     queryFn,
   });
