@@ -32,6 +32,7 @@ import { useAppDispatch } from "@/store/store";
 import { WORKSPACES } from "@/store/slices/workspace";
 import { useMutationDataState } from "@/hooks/useMutation";
 import { useQueryClient } from "@tanstack/react-query";
+import { getNotifications } from "../../../../actions/user";
 interface Props {
   activeWorkspaceId: string;
 }
@@ -41,12 +42,11 @@ const Sidebar = ({ activeWorkspaceId }: Props) => {
   const dispatch = useAppDispatch();
   const client = useQueryClient();
   const { data, isFetched, refetch } = useQueryData(["user-workspace"], () => {
-    console.log("stared1aaaa");
     return getWorkSpaces();
   });
   const { data: notifications } = useQueryData(
     ["user-notifications"],
-    getWorkSpaces
+    getNotifications
   );
   const { data: count } = notifications as NotificationProps;
   const { data: workspaces } = data as WorkspaceProps;

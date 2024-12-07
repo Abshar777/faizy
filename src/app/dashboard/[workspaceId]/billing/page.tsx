@@ -6,10 +6,12 @@ import { FaFilePdf } from "react-icons/fa6";
 import PaymentMethod from "@/components/global/paymentMethod";
 import { ScrollArea } from "@/components/ui/scroll-area";
 import PaymentHistory from "@/components/global/paymentMethod/PaymentHistory";
+import { getPaymentInfo } from "../../../../../actions/subscription";
 
 interface Props {}
 
-const BillingPage = (props: Props) => {
+const BillingPage = async(props: Props) => {
+  const {data}=await getPaymentInfo()
  
   return (
     <div className="grid py-2   grid-cols-1 xl:grid-cols-2 lg:py-5    gap-3">
@@ -23,10 +25,10 @@ const BillingPage = (props: Props) => {
               </p>
             </div>
             <div className="flex flex-col gap-y-1">
-              <h1 className="text-xl font-semibold">$99/Month</h1>
+              <h1 className="text-xl font-semibold">${data?.subscription?.plan==="PRO" ? 99 : 0}/Month</h1>
               <p className="text-sm text-muted-foreground">
                 You are currently on the{" "}
-                <span className="text-primary font-semibold">PRO</span> plan.
+                <span className="text-primary font-semibold">{data?.subscription?.plan}</span> plan.
               </p>
             </div>
           </div>

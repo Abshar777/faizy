@@ -68,7 +68,7 @@ const layout = async ({ children, params: { workspaceId } }: Props) => {
         <div className="w-full pt-28 p-6 overflow-y-scroll overflow-x-hidden">
           <GlobalHeader workspace={hasAcces.data.workspace} />
         
-          <div className="mt-4">{children}</div>
+          <div className="mt-4 h-full">{children}</div>
         </div>
       </div>
     </HydrationBoundary>

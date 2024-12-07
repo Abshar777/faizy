@@ -22,10 +22,18 @@ export type WorkspaceProps = {
 export type NotificationProps = {
   status: number
   data: {
+    notification: {
+      id: string;
+      userId: string | null;
+      content: string;
+      image: string | null;
+      firstname: string | null;
+      lastname: string | null;
+    }[];
     _count: {
-      notification: number
-    }
-  }
+      notification: number;
+    };
+  };
 }
 
 
@@ -79,7 +87,7 @@ export type VideoProps = {
 
 
 export type initialFolderStateProps = {
-  folders:TFolder[]
+  folders: TFolder[]
 }
 
 export type TFolder = ({
@@ -125,3 +133,4 @@ export type VideoPreviewProp = {
   }
   author: boolean
 }
+
