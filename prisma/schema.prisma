@@ -97,8 +97,11 @@ model Video {
   WorkSpace   WorkSpace? @relation(fields: [workSpaceId], references: [id], onDelete: Cascade)
   workSpaceId String?    @db.Uuid
   views       Int        @default(0)
+  viewers     String[]   @default([])
+  thumbnail   String     @default("")
   summery     String?
   Comment     Comment[]
+  
 }
 
 model Member {

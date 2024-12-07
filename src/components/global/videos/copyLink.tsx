@@ -16,9 +16,10 @@ interface Props {
     | "bordered"
     | "flat"
     | "faded";
+  size?: "sm" | "md" | "lg" ;
 }
 
-export const CopyLink = ({ videoId, className, variant }: Props) => {
+export const CopyLink = ({ videoId, className, variant ,size="sm"}: Props) => {
   const [isDisabled, setIsDisabled] = useState(false);
   const onCopyClipBoard = async (e: React.MouseEvent<HTMLButtonElement>) => {
    try {
@@ -43,7 +44,7 @@ export const CopyLink = ({ videoId, className, variant }: Props) => {
   return (
     <Button
       isIconOnly
-      size="sm"
+      size={size}
       className={cn(className, "p-0")}
       variant={variant}
       onClick={onCopyClipBoard}

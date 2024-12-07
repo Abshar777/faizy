@@ -32,40 +32,17 @@ interface Props {
   title: string | null;
   source: string;
   workspaceId: string;
+  thumbnail: string;
 }
 
 const VideoCard = (props: Props) => {
   const { ripples, onClick, onClear } = useRipple();
-  const [thumbnail, setThumbnail] = useState<string>("");
-  const videoRef = useRef<HTMLVideoElement | null>(null);
-  const generateThumbnail = () => {
-    const video = videoRef.current;
-    if (!video) return;
 
-    video.currentTime = 2;
-    video.onseeked = () => {
-      const canvas = document.createElement("canvas");
-      canvas.width = video.videoWidth;
-      canvas.height = video.videoHeight;
-
-      const context = canvas.getContext("2d");
-      if (context) {
-        context.drawImage(video, 0, 0, canvas.width, canvas.height);
-        // console.log(context,canvas);
-        // const dataUrl = canvas.toDataURL("image/png");
-        // setThumbnail(dataUrl);
-      }
-    };
-  };
   const daysAgo = Math.floor(
     (new Date().getTime() - new Date(props.createdAt).getTime()) /
       (1000 * 60 * 60 * 24)
   );
-
-
-  useEffect(() => {
-    generateThumbnail();
-  }, []);
+  console.log(props.thumbnail);
 
   return (
     <Card
@@ -89,23 +66,14 @@ const VideoCard = (props: Props) => {
         </div>
         <Link href={`dashboard/${props.workspaceId}/video/${props.id}`}>
           <Image
-            isLoading
             isBlurred
-            shadow="sm"
+            shadow="lg"
             radius="lg"
             width="100%"
-            className="w-full object-cover h-[140px] "
-            src={props.source}
+            className="w-full  object-cover h-[140px] "
+            src={props.thumbnail}
             alt=""
           />
-          <video
-            ref={videoRef}
-            controls={false}
-            preload="metadata"
-            className="w-full hidden  aspect-video opacity-50 z-20"
-          >
-            <source src={props.source} />
-          </video>
         </Link>
       </CardBody>
       <CardFooter className="  flex flex-col items-start pt-1  px-3 z-20">

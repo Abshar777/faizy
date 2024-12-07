@@ -35,7 +35,6 @@ const layout = async ({ children, params: { workspaceId } }: Props) => {
   await query.prefetchQuery({
     queryKey: ["user-workspace"],
     queryFn: () => {
-      console.log("stared2");
       return getWorkSpaces();
     },
   });

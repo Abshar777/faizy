@@ -18,6 +18,7 @@ export const useMutationData = (mutationKey: MutationKey,
             // if (queryKey) client.invalidateQueries({ queryKey: [queryKey] as unknown as readonly unknown[] })
             if (onSuccess) onSuccess(data);
             if (data.status === 200) return toast.success(data.message)
+            if (data.status === 202) return ;
             toast.error(data.message)
         },
         onSettled: async () => {

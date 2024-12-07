@@ -73,7 +73,8 @@ export type VideoProps = {
   } | null
   createdAt: Date
   title: string | null
-  source: string
+  source: string;
+  thumbnail: string;
 }
 
 
@@ -98,4 +99,29 @@ export type initialWorkSpaceStateProps = {
     name: string,
     type: "PERSONAL" | "PUBLIC"
   }[]
+}
+
+export type VideoPreviewProp = {
+  status: number
+  data: {
+    User: {
+      firstname: string | null
+      lastname: string | null
+      image: string | null
+      clerkId: string
+      trial: boolean
+      subscription: {
+        plan: 'PRO' | 'FREE'
+      } | null
+    } | null
+    title: string | null
+    description: string | null
+    source: string
+    views: number
+    createdAt: Date
+    processing: boolean
+    summery: string,
+    thumbnail: string
+  }
+  author: boolean
 }

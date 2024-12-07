@@ -12,7 +12,7 @@ type Props = {};
 const InfoBar = (props: Props) => {
   return (
     <header className="pl-20 md:pl-[265px] fixed py-4 px-3 -ml-2 w-full flex items-center justify-between gap-4">
-      <div className="flex gap-4 justify-center items-center border-2 rounded-full px-4 w-full max-w-lg">
+      <div className="flex gap-4  justify-center items-center border-2 rounded-full px-4 w-full max-w-lg">
         <Search size={25} className="text-muted-foreground/50" />
         <Input
           className="bg-transparent outline-none ring-0 ring-transparent outline-0 outline-transparent border-none !placeholder-muted-foreground/50"

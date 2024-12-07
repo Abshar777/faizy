@@ -15,6 +15,7 @@ import {
   SelectValue,
 } from "@/components/ui/select";
 import { DialogClose } from "@/components/ui/dialog";
+import { cn } from "@/lib/utils";
 interface Props {
   videoId: string;
   currentFolder: string;
@@ -40,7 +41,7 @@ const ChangeVideoLocation = ({
   } = useMoveVideos(videoId, currentWorkspace, currentFolder);
   // const folder = folders.find((f) => f.id === currentFolder);
   const workspace = workspaces.find((f) => f.id === currentWorkspace);
-  const ref=useRef<HTMLButtonElement>(null);
+  const ref = useRef<HTMLButtonElement>(null);
   useEffect(() => {
     if (isSuccess) ref.current?.click();
   }, [isSuccess]);
@@ -117,10 +118,13 @@ const ChangeVideoLocation = ({
           </Label>
         )}
       </div>
-      <DialogClose ref={ref} ></DialogClose>
-        <Button
-          isLoading={isPending}
-        className="bg-secondary-foreground text-secondary font-semibold hover:bg-secondary-foreground/80"
+      <DialogClose ref={ref}></DialogClose>
+      <Button
+        disabled={!isFolders || isFolders.length == 0}
+        isLoading={isPending}
+        className={cn("bg-secondary-foreground text-secondary font-semibold ",
+          (!isFolders || isFolders.length == 0)?"opacity-40 hover:opacity-25 disabled:opacity-45 disabled:hover:opacity-25":"hover:bg-secondary-foreground/80"
+        )}
         type="submit"
       >
         Transfer
