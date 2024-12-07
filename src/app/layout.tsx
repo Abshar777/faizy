@@ -37,7 +37,7 @@ export default function RootLayout({
             shadow="0 0 30px 5px rgba(255, 255, 255, 0.3)"
             color="rgb(255 255 255 / 0.3);"
             showSpinner={false}
-            zIndex={9999999}
+            zIndex={9999999999999999999}
           />
           <ThemeProvider
             attribute="class"

@@ -260,19 +260,19 @@ const Sidebar = ({ activeWorkspaceId }: Props) => {
   return (
     <div className="full">
       <InfoBar />
-      <div className="md:hidden fixed my-4">
+      <div className="md:hidden z-[999999999999999999] fixed my-4">
         <Sheet>
           <SheetTrigger asChild className="ml-2">
             <Button isIconOnly variant="light" className="mt-[2px]">
               <Menu />
             </Button>
           </SheetTrigger>
-          <SheetContent side={"left"} className="p-0 w-fit h-full">
+          <SheetContent side={"left"} className="p-0 z-[99999999999999999999] w-fit h-full">
             {SidebarSection}
           </SheetContent>
         </Sheet>
       </div>
-      <div className="md:block hidden h-full">{SidebarSection}</div>
+      <div className="md:block hidden relative h-full z-[11]">{SidebarSection}</div>
     </div>
   );
 };

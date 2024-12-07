@@ -8,6 +8,14 @@ import {
   verfyAccessToWorkSapce,
 } from "../../../../actions/workspace";
 import {
+  Breadcrumb,
+  BreadcrumbItem,
+  BreadcrumbLink,
+  BreadcrumbList,
+  BreadcrumbPage,
+  BreadcrumbSeparator,
+} from "@/components/ui/breadcrumb";
+import {
   QueryClient,
   dehydrate,
   HydrationBoundary,
@@ -42,7 +50,6 @@ const layout = async ({ children, params: { workspaceId } }: Props) => {
   await query.prefetchQuery({
     queryKey: ["workspace-folders"],
     queryFn: () => getWorkspaceFolders(workspaceId),
-
   });
 
   await query.prefetchQuery({
@@ -53,13 +60,14 @@ const layout = async ({ children, params: { workspaceId } }: Props) => {
     queryKey: ["folder-videos"],
     queryFn: () => getAllUserVideos(workspaceId),
   });
-
+  
   return (
     <HydrationBoundary state={dehydrate(query)}>
       <div className="flex h-screen w-screen">
         <Sidebar activeWorkspaceId={workspaceId} />
         <div className="w-full pt-28 p-6 overflow-y-scroll overflow-x-hidden">
           <GlobalHeader workspace={hasAcces.data.workspace} />
+        
           <div className="mt-4">{children}</div>
         </div>
       </div>

@@ -42,7 +42,6 @@ const VideoCard = (props: Props) => {
     (new Date().getTime() - new Date(props.createdAt).getTime()) /
       (1000 * 60 * 60 * 24)
   );
-  console.log(props.thumbnail);
 
   return (
     <Card
@@ -64,7 +63,7 @@ const VideoCard = (props: Props) => {
         <div className="absolute z-50 bottom-3 left-3">
           <CopyLink videoId={props.id} />
         </div>
-        <Link href={`dashboard/${props.workspaceId}/video/${props.id}`}>
+        <Link href={`/dashboard/${props.workspaceId}/video/${props.id}`}>
           <Image
             isBlurred
             shadow="lg"
@@ -77,7 +76,7 @@ const VideoCard = (props: Props) => {
         </Link>
       </CardBody>
       <CardFooter className="  flex flex-col items-start pt-1  px-3 z-20">
-        <Link href={`dashboard/${props.workspaceId}/video/${props.id}`}>
+        <Link className="w-full" href={`/dashboard/${props.workspaceId}/video/${props.id}`}>
           <h2 className="text-sm capitalize  font-semibold text-[#BDBDBD]">
             {props.title}
           </h2>

@@ -105,7 +105,7 @@ export const addViewer = async (videoId: string) => {
             where: { id: videoId },
         })
         if (!video) return { status: 404, message: 'Video not found' };
-        if (video.viewers.includes(userData?.id)) return { status: 202, message: 'User already viewed this video' };
+        if (video.viewers.includes(userData?.id)) return { status: 201, message: 'User already viewed this video' };
         const updatedVideo = await client.video.update({
             where: { id: videoId },
             data: { viewers: { push: userData?.id }, views: video.views + 1 },

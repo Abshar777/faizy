@@ -53,13 +53,15 @@ const VideoPlayer = ({ video, fn, thumbnail, title }: Props) => {
       onPause={(e) => {
         fn.onPause();
       }}
-      className="w-full top-0 h-full object-cover relative"
+      className=" rounded-lg aspect-video z-[0] object-cover relative"
       src={video}
       viewType="video"
       streamType="on-demand"
       logLevel="warn"
       crossOrigin
       playsInline
+      fullscreenOrientation="landscape"
+
       title={title}
       poster={thumbnail}
     >
