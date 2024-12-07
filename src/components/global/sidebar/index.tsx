@@ -39,8 +39,8 @@ interface Props {
 const Sidebar = ({ activeWorkspaceId }: Props) => {
   const router = useRouter();
   const dispatch = useAppDispatch();
-  const client=useQueryClient();
-  const { data, isFetched,refetch } = useQueryData(["user-workspace"], () => {
+  const client = useQueryClient();
+  const { data, isFetched, refetch } = useQueryData(["user-workspace"], () => {
     console.log("stared1aaaa");
     return getWorkSpaces();
   });
@@ -58,6 +58,7 @@ const Sidebar = ({ activeWorkspaceId }: Props) => {
   );
   const menuItems = MENU_ITEMS(activeWorkspaceId);
   const { latestVaribales } = useMutationDataState(["user-workspace"]);
+  console.log(pathname.split("/")[3]);
   useEffect(() => {
     if (isFetched && workspaces)
       dispatch(WORKSPACES({ workspaces: workspaces.workspace }));
@@ -150,7 +151,7 @@ const Sidebar = ({ activeWorkspaceId }: Props) => {
               selected={
                 pathname.includes(item.name)
                   ? true
-                  : item.name == "library"
+                  : !pathname.split("/")[3] && item.name == "library"
                   ? true
                   : false
               }
@@ -161,7 +162,6 @@ const Sidebar = ({ activeWorkspaceId }: Props) => {
       <Separator className="w-[90%]" />
       <div className="w-full flex items-center justify-between">
         <p className="w-full text-primary/90 font-bold mt-4 px-1">Workspaces</p>
-        
       </div>
       {/* members and workspaces */}
       <nav className="w-full px-1">
@@ -267,12 +267,17 @@ const Sidebar = ({ activeWorkspaceId }: Props) => {
               <Menu />
             </Button>
           </SheetTrigger>
-          <SheetContent side={"left"} className="p-0 z-[99999999999999999999] w-fit h-full">
+          <SheetContent
+            side={"left"}
+            className="p-0 z-[99999999999999999999] w-fit h-full"
+          >
             {SidebarSection}
           </SheetContent>
         </Sheet>
       </div>
-      <div className="md:block hidden relative h-full z-[11]">{SidebarSection}</div>
+      <div className="md:block hidden relative h-full z-[11]">
+        {SidebarSection}
+      </div>
     </div>
   );
 };

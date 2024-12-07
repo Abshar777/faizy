@@ -15,6 +15,7 @@
     "@nextui-org/button": "^2.0.38",
     "@nextui-org/card": "^2.0.34",
     "@nextui-org/image": "^2.0.32",
+    "@nextui-org/pagination": "^2.2.3",
     "@nextui-org/react": "^2.4.8",
     "@nextui-org/skeleton": "^2.0.32",
     "@nextui-org/system": "^2.2.6",
