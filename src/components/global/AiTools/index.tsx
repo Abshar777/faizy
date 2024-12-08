@@ -13,52 +13,51 @@ interface Props {
 
 const AiTools = ({ plan, trial, videoId }: Props) => {
   return (
-    <TabsContent
-      value="Ai Tools"
-      className="flex w-full flex-col bg-muted-foreground/5 p-4 rounded-lg text-2xl gap-y-4"
-    >
-      <div className="flex items-center w-full">
-        <div className="w-full flex flex-col gap-y-2">
-          <div className="flex items-center justify-between">
-            <h2 className="text-lg font-bold">AI Tools</h2>
-            <div className="flex items-center gap-x-2">
-              <Button color="primary" size="sm">
-                Try Now
-              </Button>
-              <Button color="secondary" size="sm">
-                Pay Now
-              </Button>
+    <TabsContent value="Ai Tools" asChild>
+      <div className="flex w-full flex-col bg-muted-foreground/5 p-4 rounded-lg text-2xl gap-y-4">
+        <div className="flex items-center w-full">
+          <div className="w-full flex flex-col gap-y-2">
+            <div className="flex items-center justify-between">
+              <h2 className="text-lg font-bold">AI Tools</h2>
+              <div className="flex items-center gap-x-2">
+                <Button color="primary" size="sm">
+                  Try Now
+                </Button>
+                <Button color="secondary" size="sm">
+                  Pay Now
+                </Button>
+              </div>
             </div>
+            <p className="text-sm text-muted-foreground">
+              Taking your videos to the next <br />
+              step with the power of AI
+            </p>
           </div>
-          <p className="text-sm text-muted-foreground">
-            Taking your videos to the next <br />
-            step with the power of AI
-          </p>
         </div>
-      </div>
-      <div className="flex bg-primary-foreground border w-full p-4 rounded-lg items-center justify-between">
-        <p className="text-sm text-muted-foreground flex items-center gap-x-2">
-          <VideoRecorderDuotone /> Genrate Video Summary
-        </p>
-        <Button color="primary" size="sm">
-          Generate
-        </Button>
-      </div>
-      <div className="flex bg-primary-foreground border w-full p-4 rounded-lg items-center justify-between">
-        <p className="text-sm text-muted-foreground flex items-center gap-x-2">
-          <Message /> Create And Read Video Transcript
-        </p>
-        <Button color="primary" size="sm">
-          Create 
-        </Button>
-      </div>
-      <div className="flex bg-primary-foreground border w-full p-4 rounded-lg items-center justify-between">
-        <p className="text-sm text-muted-foreground flex items-center gap-x-2">
-          <MdDownloading className="text-2xl" /> Download As Audio File
-        </p>
-        <Button color="primary" size="sm">
-          Download 
-        </Button>
+        <div className="flex bg-primary-foreground border w-full p-4 rounded-lg items-center justify-between">
+          <p className="text-sm text-muted-foreground flex items-center gap-x-2">
+            <VideoRecorderDuotone /> Genrate Video Summary
+          </p>
+          <Button color="primary" size="sm">
+            Generate
+          </Button>
+        </div>
+        <div className="flex bg-primary-foreground border w-full p-4 rounded-lg items-center justify-between">
+          <p className="text-sm text-muted-foreground flex items-center gap-x-2">
+            <Message /> Create And Read Video Transcript
+          </p>
+          <Button color="primary" size="sm">
+            Create
+          </Button>
+        </div>
+        <div className="flex bg-primary-foreground border w-full p-4 rounded-lg items-center justify-between">
+          <p className="text-sm text-muted-foreground flex items-center gap-x-2">
+            <MdDownloading className="text-2xl" /> Download As Audio File
+          </p>
+          <Button color="primary" size="sm">
+            Download
+          </Button>
+        </div>
       </div>
     </TabsContent>
   );

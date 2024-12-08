@@ -4,7 +4,7 @@ import {
   QueryClient,
 } from "@tanstack/react-query";
 import React from "react";
-import { getPreviewVideo } from "../../../../actions/video";
+import { getPreviewVideo, getVideoComments } from "../../../../actions/video";
 import { getUserProfile } from "../../../../actions/user";
 import VideoPreview from "@/components/global/videos/preview";
 import LandingPageNavBar from "@/app/(web)/_components/LandingPageNavBar";
@@ -31,11 +31,10 @@ const VideoPreviewPage = async ({ params: { videoId } }: Props) => {
     queryKey: ["preview-video"],
     queryFn: () => getPreviewVideo(videoId),
   });
-
-  //   await query.prefetchQuery({
-  //     queryKey: ['video-comments'],
-  //     queryFn: () => getVideoComments(videoId),
-  //   })
+  await query.prefetchQuery({
+    queryKey: ["video-comments"],
+    queryFn: () => getVideoComments(videoId),
+  });
   return (
     <HydrationBoundary state={dehydrate(query)}>
       <div className="w-full flex flex-col min-h-screen h-full bg-primary-foreground">

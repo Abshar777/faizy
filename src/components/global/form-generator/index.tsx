@@ -5,6 +5,7 @@ import React, { useState } from "react";
 import { FieldErrors, FieldValues, UseFormRegister } from "react-hook-form";
 import { ErrorMessage } from "@hookform/error-message";
 import { Textarea } from "@/components/ui/textarea";
+import { cn } from "@/lib/utils";
 
 type Props = {
   type?: "text" | "email" | "password" | "number";
@@ -16,6 +17,8 @@ type Props = {
   name: string;
   errors: FieldErrors<FieldValues>;
   lines?: number;
+  className?: string;
+  showError?: boolean;
 };
 
 const FormGenerator = ({
@@ -28,6 +31,8 @@ const FormGenerator = ({
   errors,
   type,
   lines,
+  className,
+  showError = true,
 }: Props) => {
   const [show, setShow] = useState<boolean>(false);
   const [Type, setType] = useState<string>(type || "text");
@@ -42,12 +47,17 @@ const FormGenerator = ({
           <div className="flex items-center justify-end">
             {" "}
             <Input
-            id={`input-${label}`}
-            type={Type}
-            placeholder={placeholder}
-            className={`focus:bg-transparent placeholder:text-muted-foreground/30 bg-primary-foreground ${errors[name]&&"errInput"} border-themeGray text-themeTextGray`}
-            {...register(name)}
-          />
+              id={`input-${label}`}
+              type={Type}
+              placeholder={placeholder}
+              className={cn(
+                className,
+                `focus:bg-background/20 placeholder:text-muted-foreground/30 bg-primary-foreground ${
+                  errors[name] && "errInput"
+                } border-themeGray text-themeTextGray`
+              )}
+              {...register(name)}
+            />
             {type == "password" && (
               <i
                 onClick={() => {
@@ -60,15 +70,17 @@ const FormGenerator = ({
               ></i>
             )}
           </div>
-          <ErrorMessage
-            errors={errors}
-            name={name}
-            render={({ message }: { message: string }) => (
-              <p className="text-red-700 mt-2">
-                {message === "Required" ? "" : message}
-              </p>
-            )}
-          />
+          {showError && (
+            <ErrorMessage
+              errors={errors}
+              name={name}
+              render={({ message }: { message: string }) => (
+                <p className="text-red-700 mt-2">
+                  {message === "Required" ? "" : message}
+                </p>
+              )}
+            />
+          )}
         </Label>
       );
     case "select":
@@ -91,15 +103,17 @@ const FormGenerator = ({
                 </option>
               ))}
           </select>
-          <ErrorMessage
-            errors={errors}
-            name={name}
-            render={({ message }: { message: string }) => (
-              <p className="text-red-400 mt-2">
-                {message === "Required" ? "" : message}
-              </p>
-            )}
-          />
+          {showError && (
+            <ErrorMessage
+              errors={errors}
+              name={name}
+              render={({ message }: { message: string }) => (
+                <p className="text-red-400 mt-2">
+                  {message === "Required" ? "" : message}
+                </p>
+              )}
+            />
+          )}
         </Label>
       );
 
@@ -114,15 +128,17 @@ const FormGenerator = ({
             rows={lines}
             {...register(name)}
           />
-          <ErrorMessage
-            errors={errors}
-            name={name}
-            render={({ message }: { message: string }) => (
-              <p className="text-red-400 mt-2">
-                {message === "Required" ? "" : message}
-              </p>
-            )}
-          />
+          {showError && (
+            <ErrorMessage
+              errors={errors}
+              name={name}
+              render={({ message }: { message: string }) => (
+                <p className="text-red-400 mt-2">
+                  {message === "Required" ? "" : message}
+                </p>
+              )}
+            />
+          )}
         </Label>
       );
 

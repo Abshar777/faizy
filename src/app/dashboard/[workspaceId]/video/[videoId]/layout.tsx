@@ -19,7 +19,7 @@ import {
   HydrationBoundary,
 } from "@tanstack/react-query";
 
-import { getPreviewVideo } from "../../../../../../actions/video";
+import { getPreviewVideo, getVideoComments } from "../../../../../../actions/video";
 import VideoPreview from "@/components/global/videos/preview";
 import { VideoInfo } from "@/components/global/videos/videoInfo";
 
@@ -49,6 +49,10 @@ const layout = async ({
   await query.prefetchQuery({
     queryKey: ["preview-video"],
     queryFn: () => getPreviewVideo(videoId),
+  });
+  await query.prefetchQuery({
+    queryKey: ["video-comments"],
+    queryFn: () => getVideoComments(videoId),
   });
 
   return (

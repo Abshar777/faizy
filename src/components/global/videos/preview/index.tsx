@@ -16,6 +16,8 @@ import RichLink from "../richLink";
 import { truncateString } from "@/util/string";
 import TabMenu from "../../tabs";
 import AiTools from "../../AiTools";
+import VideoTranscript from "../../video-transcript";
+import Activities from "../../activities";
 
 interface Props {
   videoId: string;
@@ -86,7 +88,6 @@ const VideoPreview = ({ videoId }: Props) => {
               </div>
 
               <VideoPlayer
-              
                 thumbnail={video?.thumbnail}
                 title={video?.title || ""}
                 fn={fn}
@@ -159,6 +160,11 @@ const VideoPreview = ({ videoId }: Props) => {
           >
             <section className="py-5 w-full">
               <AiTools plan="PRO" trial={false} videoId={videoId} />
+              <VideoTranscript transcript={video?.description as string} />
+              <Activities
+                videoId={videoId}
+                author={video?.User?.firstname as string}
+              />
             </section>
           </TabMenu>
         </div>
