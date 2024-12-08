@@ -70,6 +70,7 @@ model Media {
   User   User?   @relation(fields: [userId], references: [id])
 }
 
+
 model WorkSpace {
   id        String   @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
   type      Type
