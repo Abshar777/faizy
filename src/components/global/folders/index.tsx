@@ -13,6 +13,7 @@ import { Skeleton } from "@nextui-org/skeleton";
 import { useAppDispatch } from "@/store/store";
 import { FOLDERS } from "@/store/slices/folders";
 import Videos from "../videos";
+import { PiSealWarningDuotone } from "react-icons/pi";
 
 interface Props {
   workspaceId: string;
@@ -26,10 +27,10 @@ const Folders = ({ workspaceId }: Props) => {
   const { latestVaribales } = useMutationDataState(["create-folder"]);
   let { data: folders, status } = data as FoldersProps;
   if (isFetched && folders) {
-    dispatch(FOLDERS({folders:folders}));
+    dispatch(FOLDERS({ folders: folders }));
   }
   return (
-    <div className="flex flex-col gap-2 px-3">
+    <div className="flex  flex-col gap-2 px-3">
       <div className="flex    items-center justify-between">
         <div className="heading flex items-center gap-2">
           <FolderDuotone />{" "}
@@ -51,11 +52,14 @@ const Folders = ({ workspaceId }: Props) => {
         <div
           className={cn(
             "flex  w-full  items-center gap-2",
-            status!==200 && "justify-center"
+            status !== 200 && "justify-center"
           )}
         >
-          {status!==200 ? (
-            <p className="text-sm text-muted-foreground">No folders found</p>
+          {status !== 200 ? (
+            <p className="text-sm text-muted-foreground flex items-center gap-x-2">
+              <PiSealWarningDuotone className="text-muted-foreground \" />
+              No folders found
+            </p>
           ) : (
             <>
               {latestVaribales && latestVaribales.status === "pending" && (
@@ -66,7 +70,12 @@ const Folders = ({ workspaceId }: Props) => {
                 />
               )}
               {folders.map((folder) => (
-                <Folder key={folder.id} count={folder._count.videos || 0} name={folder.name} id={folder.id} />
+                <Folder
+                  key={folder.id}
+                  count={folder._count.videos || 0}
+                  name={folder.name}
+                  id={folder.id}
+                />
               ))}
             </>
           )}

@@ -2,17 +2,7 @@ import React, { useEffect, useState } from "react"
 import { useQueryData } from "./useQueryData";
 import { searchUsers } from "../../actions/user";
 import { $Enums } from "@prisma/client";
-
-type TUser = {
-    image: string | null;
-    id: string;
-    email: string;
-    subscription: {
-        plan: $Enums.SUBSCRIPTION_PLAN;
-    } | null;
-    firstname: string | null;
-    lastname: string | null;
-};
+import { TUser } from "@/types/index.type";
 
 export const useSearch = (key: string, type: "USERS") => {
     const [query, setQuery] = useState("");
@@ -36,8 +26,7 @@ export const useSearch = (key: string, type: "USERS") => {
                 const users = await searchUsers(queryKey[1] as string)
                 if (users.status === 200) setOnUsers(users.data)
             }
-        },
-        false
+        }
     )
 
     useEffect(() => {

@@ -48,7 +48,7 @@ export default function RootLayout({
               <NextUIProvider>
                 <ReactQueryProvider>
                   {children}
-                  <Toaster position="bottom-center" richColors theme="dark" />
+                  <Toaster className="z-[9999999999999999999999999999999]" position="bottom-center" richColors theme="dark" />
                 </ReactQueryProvider>
               </NextUIProvider>
             </StoreProvider>

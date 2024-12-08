@@ -1,5 +1,5 @@
 import React from "react";
-import { getNotifications, onAuthenticateUser } from "../../../../actions/user";
+import { getInvitations, getNotifications, onAuthenticateUser } from "../../../../actions/user";
 import { redirect } from "next/navigation";
 import {
   getAllUserVideos,
@@ -7,14 +7,6 @@ import {
   getWorkSpaces,
   verfyAccessToWorkSapce,
 } from "../../../../actions/workspace";
-import {
-  Breadcrumb,
-  BreadcrumbItem,
-  BreadcrumbLink,
-  BreadcrumbList,
-  BreadcrumbPage,
-  BreadcrumbSeparator,
-} from "@/components/ui/breadcrumb";
 import {
   QueryClient,
   dehydrate,
@@ -55,6 +47,10 @@ const layout = async ({ children, params: { workspaceId } }: Props) => {
   await query.prefetchQuery({
     queryKey: ["user-notifications"],
     queryFn: () => getNotifications(),
+  });
+  await query.prefetchQuery({
+    queryKey: ["user-invitations"],
+    queryFn: () => getInvitations(),
   });
   await query.prefetchQuery({
     queryKey: ["folder-videos"],

@@ -1,7 +1,7 @@
 "use client";
 import { useQueryData } from "@/hooks/useQueryData";
 import React from "react";
-import { PiSealWarningFill } from "react-icons/pi";
+import { PiSealWarningDuotone, PiSealWarningFill } from "react-icons/pi";
 import { getAllUserVideos } from "../../../../actions/workspace";
 import { VideosProps } from "@/types/index.type";
 import { ArrowRight, SortDescIcon } from "lucide-react";
@@ -15,17 +15,17 @@ interface Props {
   videosKey: string;
 }
 
-
-
 const Videos = ({ folderId, workspaceId, videosKey }: Props) => {
   const { data: videoData } = useQueryData([videosKey], () =>
     getAllUserVideos(folderId)
   );
   const { status: videoStatus, data: videos } = videoData as VideosProps;
+  console.log(videoStatus);
+  
   return (
     <div className="flex w-full flex-col gap-4 mt-4">
-      <div className="flex    items-center justify-between">
-        <div className="heading px-1 flex items-center gap-2">
+      <div className="flex  w-full  items-center justify-between">
+        <div className="heading px-1 flex w-full items-center gap-2">
           <VideoRecorderDuotone />{" "}
           <h2 className="text-lg text-muted-foreground font-semibold ">
             Videos
@@ -43,23 +43,21 @@ const Videos = ({ folderId, workspaceId, videosKey }: Props) => {
       </div>
       <section
         className={
-          cn(videoStatus == 200)
+          cn(videoStatus != 200
             ? "p-5 w-full flex justify-center "
-            : "grid  grid-cols-2 gap-x-5 gap-y-5 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-6 "
+            : "grid  grid-cols-2  gap-x-5 gap-y-5 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-6 ")
         }
       >
         {videoStatus !== 200 ? (
-         <>
-          {/* <p className="text-sm mt-3 justify-center flex items-center gap-2 text-center text-muted-foreground/80">
-            {" "}
-            <PiSealWarningFill />
+          <p className="text-sm text-muted-foreground  flex flex-1  items-center justify-center gap-x-2">
+            <PiSealWarningDuotone className="text-muted-foreground \" />
             No videos found
-          </p> */}
-         </>
+          </p>
         ) : (
-          videos.map((video) => <VideoCard workspaceId={workspaceId}  key={video.id} {...video} />)
+          videos.map((video) => (
+            <VideoCard workspaceId={workspaceId} key={video.id} {...video} />
+          ))
         )}
-      
       </section>
     </div>
   );

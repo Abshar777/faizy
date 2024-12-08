@@ -96,6 +96,7 @@ export const getAllUserVideos = async (workSpaceId: string) => {
             }
         })
         if (videos && videos.length > 0) return { status: 200, data: videos, message: "Videos fetched successfully" }
+        console.log(videos)
         return { status: 404, message: "Videos not found", data: [] }
     } catch (error) {
         return { status: 404, message: `somthing error happend Error: ${error}`, data: [] }

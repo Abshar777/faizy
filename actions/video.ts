@@ -104,6 +104,12 @@ export const addViewer = async (videoId: string) => {
     if (!userData) return { status: 404, message: 'User not found' };
     const video = await client.video.findUnique({
       where: { id: videoId },
+      select: {
+        User: true,
+        viewers: true,
+        views: true,
+      },
+
     })
     if (!video) return { status: 404, message: 'Video not found' };
     if (video.viewers.includes(userData?.id)) return { status: 201, message: 'User already viewed this video' };
@@ -111,6 +117,24 @@ export const addViewer = async (videoId: string) => {
       where: { id: videoId },
       data: { viewers: { push: userData?.id }, views: video.views + 1 },
     })
+    if ((video.User?.clerkid !== user.id) && video.User?.firstView) {
+      await client.user.update({
+        where: {
+          clerkid: video.User?.clerkid,
+        },
+        data: {
+          notification: {
+            create: {
+              content: `  ${userData.firstname} viewed your video`,
+              sender: {
+                name: `${userData.firstname} ${userData.lastname}`,
+                image: userData.image,
+              },
+            },
+          },
+        },
+      })
+    }
     if (updatedVideo) return { status: 201, message: 'Viewer added successfully' }
     return { status: 404, message: 'Video not found' }
   } catch (error) {

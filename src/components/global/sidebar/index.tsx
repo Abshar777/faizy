@@ -1,5 +1,5 @@
 "use client";
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import Image from "next/image";
 import {
   Select,
@@ -38,6 +38,7 @@ interface Props {
 }
 
 const Sidebar = ({ activeWorkspaceId }: Props) => {
+  const [isOpen, setIsOpen] = useState(false)
   const router = useRouter();
   const dispatch = useAppDispatch();
   const client = useQueryClient();
@@ -46,7 +47,10 @@ const Sidebar = ({ activeWorkspaceId }: Props) => {
   });
   const { data: notifications } = useQueryData(
     ["user-notifications"],
-    getNotifications
+    getNotifications,
+    {
+      refetchInterval: 5000,
+    }
   );
   const { data: count } = notifications as NotificationProps;
   const { data: workspaces } = data as WorkspaceProps;
@@ -58,7 +62,8 @@ const Sidebar = ({ activeWorkspaceId }: Props) => {
   );
   const menuItems = MENU_ITEMS(activeWorkspaceId);
   const { latestVaribales } = useMutationDataState(["user-workspace"]);
-  console.log(pathname.split("/")[3]);
+  const handleClose = () => setIsOpen(false);
+  const handleOpen = () => setIsOpen(true);
   useEffect(() => {
     if (isFetched && workspaces)
       dispatch(WORKSPACES({ workspaces: workspaces.workspace }));
@@ -73,7 +78,7 @@ const Sidebar = ({ activeWorkspaceId }: Props) => {
       <div className="bg-[#111111] px-4 py-6 gap-3 flex justify-center w-full items-center mb-4 absolute top-0 left-0 right-0">
         <Image src="/Faizy.svg" alt="Faizy" width={70} height={70} />
       </div>
-      <div className="absolute top-[-2rem] left-[-10rem] rounded-full w-full bg-gradient-to-tr blur-3xl from-[#ffffff55] to-transparent  h-[4rem]" />
+      <div className="absolute  top-[-2rem] left-[-10rem] rounded-full w-full bg-gradient-to-tr blur-3xl from-[#ffffff55] to-transparent  h-[4rem]" />
       <Select
         defaultValue={activeWorkspaceId}
         onValueChange={onChangeActiveWorkspace}
@@ -84,12 +89,13 @@ const Sidebar = ({ activeWorkspaceId }: Props) => {
             placeholder="Select a workspace"
           />
         </SelectTrigger>
-        <SelectContent className="outline-none outline-0 bg-background/20 backdrop-blur-xl">
+        <SelectContent className="outline-none z-[999999999999999999]  outline-0 bg-background/20 backdrop-blur-xl">
           <SelectGroup>
             <SelectLabel>Workspaces</SelectLabel>
             <Separator />
             {workspaces.workspace.map((workspace) => (
               <SelectItem
+                onClick={() => handleClose()}
                 className="mt-1 cursor-pointer "
                 value={workspace.id}
                 key={workspace.id}
@@ -102,6 +108,7 @@ const Sidebar = ({ activeWorkspaceId }: Props) => {
                 (workspace) =>
                   workspace.WorkSpace && (
                     <SelectItem
+                      onClick={() => handleClose()}
                       value={workspace.WorkSpace.id}
                       key={workspace.WorkSpace.id}
                     >
@@ -117,6 +124,7 @@ const Sidebar = ({ activeWorkspaceId }: Props) => {
           <Modal
             trigger={
               <Button
+                // onClick={() => handleClose()}
                 size="sm"
                 className="text-sm cursor-pointer flex items-center gap-2 transition-all duration-[.3] ease-in justify-center bg-neutral-700/30 border-t border-t-neutral-500/20 hover:bg-neutral-700/60 p-[5px] w-full rounded-sm "
               >
@@ -261,7 +269,7 @@ const Sidebar = ({ activeWorkspaceId }: Props) => {
     <div className="full">
       <InfoBar />
       <div className="md:hidden z-[999999999999999999] fixed my-4">
-        <Sheet>
+        <Sheet open={isOpen} onOpenChange={open => open ? handleOpen() : handleClose()}>
           <SheetTrigger asChild className="ml-2">
             <Button isIconOnly variant="light" className="mt-[2px]">
               <Menu />

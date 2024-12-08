@@ -1,3 +1,5 @@
+import { $Enums } from "@prisma/client";
+
 export type WorkspaceProps = {
   data: {
     subscription: {
@@ -70,9 +72,11 @@ export type NotificationProps = {
       id: string;
       userId: string | null;
       content: string;
-      image: string | null;
-      firstname: string | null;
-      lastname: string | null;
+      sender: {
+        name: string;
+        image: string | null;
+      } | null;
+      createdAt: Date;
     }[];
     _count: {
       notification: number;
@@ -189,4 +193,38 @@ export type UserProfileProps = {
     lastname: string | null;
     image: string | null;
   };
-} 
+}
+
+export type TUser = {
+  image: string | null;
+  id: string;
+  email: string;
+  subscription: {
+    plan: $Enums.SUBSCRIPTION_PLAN;
+  } | null;
+  firstname: string | null;
+  lastname: string | null;
+};
+
+
+export type InvitationProps = {
+  status: number;
+  data: {
+    id: string;
+    reciever: {
+      firstname: string | null;
+      lastname: string | null;
+      image: string | null;
+    } | null;
+    sender: {
+      firstname: string | null;
+      lastname: string | null;
+      image: string | null;
+    } | null;
+    content: string;
+    accepted: boolean;
+
+  }[] | [];
+  message?: undefined;
+};
+

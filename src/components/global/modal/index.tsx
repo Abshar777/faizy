@@ -3,6 +3,7 @@ import {
   DialogContent,
   DialogDescription,
   DialogHeader,
+  DialogOverlay,
   DialogTitle,
   DialogTrigger,
   
@@ -21,7 +22,7 @@ type Props = {
 
 const Modal = ({ children, description, title, trigger, className }: Props) => {
   return (
-    <Dialog>
+    <Dialog >
       <Tooltip
         delay={700}
         placement="bottom"
@@ -33,7 +34,8 @@ const Modal = ({ children, description, title, trigger, className }: Props) => {
           {trigger}
         </DialogTrigger>
       </Tooltip>
-      <DialogContent className="">
+      <DialogOverlay className="z-[999999999999999999]" />
+      <DialogContent  className=" z-[999999999999999999]">
         <DialogHeader>
           <DialogTitle>{title}</DialogTitle>
           <DialogDescription className="text-xs text-muted-foreground/50">
