@@ -1,6 +1,10 @@
 "use server"
 import { currentUser } from "@clerk/nextjs/server";
 import { client } from "@/lib/prisma"
+import Stripe from 'stripe'
+
+const stripe = new Stripe(process.env.STRIPE_CLIENT_SECRET as string)
+
 
 export const getPaymentInfo = async () => {
     try {
@@ -25,3 +29,35 @@ export const getPaymentInfo = async () => {
     }
 
 }
+
+export const completeSubscription = async (session_id: string) => {
+    try {
+      const user = await currentUser()
+      if (!user) return { status: 404 }
+  
+      const session = await stripe.checkout.sessions.retrieve(session_id)
+      if (session) {
+        const customer = await client.user.update({
+          where: {
+            clerkid: user.id,
+          },
+          data: {
+            subscription: {
+              update: {
+                data: {
+                  customerId: session.customer as string,
+                  plan: 'PRO',
+                },
+              },
+            },
+          },
+        })
+        if (customer) {
+          return { status: 200,message:"subscription completed"}
+        }
+      }
+      return { status: 404,message:"session not found"}
+    } catch (error) {
+      return { status: 400,message:"internal server error"+error}
+    }
+  }

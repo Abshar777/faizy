@@ -20,7 +20,6 @@ const Videos = ({ folderId, workspaceId, videosKey }: Props) => {
     getAllUserVideos(folderId)
   );
   const { status: videoStatus, data: videos } = videoData as VideosProps;
-  console.log(videoStatus);
   
   return (
     <div className="flex w-full flex-col gap-4 mt-4">

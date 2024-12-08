@@ -33,6 +33,7 @@ import { WORKSPACES } from "@/store/slices/workspace";
 import { useMutationDataState } from "@/hooks/useMutation";
 import { useQueryClient } from "@tanstack/react-query";
 import { getNotifications } from "@/actions/user";
+import PaymentButton from "../paymentButton";
 interface Props {
   activeWorkspaceId: string;
 }
@@ -187,7 +188,7 @@ const Sidebar = ({ activeWorkspaceId }: Props) => {
           className={cn(
             " py-1  fade-layer",
             workspaces.subscription?.plan !== "FREE"
-              ? "h-[130px]"
+              ? "h-[110px]"
               : "h-[20%] py-5"
           )}
         >
@@ -255,9 +256,7 @@ const Sidebar = ({ activeWorkspaceId }: Props) => {
               title="Upgrade to PRO plan"
               description="Upgrade to PRO plan to create more workspaces"
               footer={
-                <Button className="w-full bg-muted-foreground/10 uppercase border-t hover:bg-background/30 backdrop-blur-lg active:scale-[.9] transition-all duration-[.3] ease-in">
-                  Upgrade
-                </Button>
+                <PaymentButton />
               }
             ></GlobalCard>
           </div>
