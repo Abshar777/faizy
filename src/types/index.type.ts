@@ -19,6 +19,50 @@ export type WorkspaceProps = {
 }
 
 
+export type CommentRepliesProps = {
+  id: string
+  comment: string
+  createdAt: Date
+  commentId: string | null
+  userId: string | null
+  videoId: string | null
+  User: {
+    id: string
+    email: string
+    firstname: string | null
+    lastname: string | null
+    createdAt: Date
+    clerkid: string
+    image: string | null
+    trial: boolean
+    firstView: boolean
+  } | null
+}
+
+export type VideoCommentProps = {
+  data: {
+    User: {
+      id: string
+      email: string
+      firstname: string | null
+      lastname: string | null
+      createdAt: Date
+      clerkid: string
+      image: string | null
+      trial: boolean
+      firstView: boolean
+    } | null
+    reply: CommentRepliesProps[]
+    id: string
+    comment: string
+    createdAt: Date
+    commentId: string | null
+    userId: string | null
+    videoId: string | null
+  }[]
+}
+
+
 export type NotificationProps = {
   status: number
   data: {
@@ -134,3 +178,15 @@ export type VideoPreviewProp = {
   author: boolean
 }
 
+export type UserProfileProps = {
+  status: number;
+  data?: undefined;
+} | {
+  status: number;
+  data: {
+    id: string;
+    firstname: string | null;
+    lastname: string | null;
+    image: string | null;
+  };
+} 

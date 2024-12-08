@@ -35,7 +35,7 @@ const AiTools = ({ plan, trial, videoId }: Props) => {
           </div>
         </div>
         <div className="flex bg-primary-foreground border w-full p-4 rounded-lg items-center justify-between">
-          <p className="text-sm text-muted-foreground flex items-center gap-x-2">
+          <p className="text-sm lg:text-xs text-muted-foreground flex items-center gap-x-2">
             <VideoRecorderDuotone /> Genrate Video Summary
           </p>
           <Button color="primary" size="sm">
@@ -43,7 +43,7 @@ const AiTools = ({ plan, trial, videoId }: Props) => {
           </Button>
         </div>
         <div className="flex bg-primary-foreground border w-full p-4 rounded-lg items-center justify-between">
-          <p className="text-sm text-muted-foreground flex items-center gap-x-2">
+          <p className="text-sm lg:text-xs text-muted-foreground flex items-center gap-x-2">
             <Message /> Create And Read Video Transcript
           </p>
           <Button color="primary" size="sm">
@@ -51,7 +51,7 @@ const AiTools = ({ plan, trial, videoId }: Props) => {
           </Button>
         </div>
         <div className="flex bg-primary-foreground border w-full p-4 rounded-lg items-center justify-between">
-          <p className="text-sm text-muted-foreground flex items-center gap-x-2">
+          <p className="text-sm lg:text-xs text-muted-foreground flex items-center gap-x-2">
             <MdDownloading className="text-2xl" /> Download As Audio File
           </p>
           <Button color="primary" size="sm">
