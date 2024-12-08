@@ -26,6 +26,7 @@ model User {
   subscription Subscription?
   videos       Video[]
   workspace    WorkSpace[]
+  paymentHistory PaymentHistory[]
 }
 
 model Comment {
@@ -49,6 +50,14 @@ model Subscription {
   updatedAt  DateTime          @default(now())
   customerId String?           @unique
   User       User?             @relation(fields: [userId], references: [id])
+}
+
+model PaymentHistory {
+  id        String    @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+  userId    String?   @db.Uuid
+  createdAt DateTime  @default(now())
+  User      User?     @relation(fields: [userId], references: [id])
+  paymentInfo Json
 }
 
 model Media {

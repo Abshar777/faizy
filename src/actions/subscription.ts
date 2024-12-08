@@ -52,6 +52,17 @@ export const completeSubscription = async (session_id: string) => {
             },
           },
         })
+        await client.paymentHistory.create({
+            data:{
+                userId:user.id,
+                paymentInfo:{
+                    customerId:session.customer as string,
+                    plan:"PRO",
+                    amount:session.amount_total as number,
+                    currency:session.currency as string
+                }
+            }
+        })
         if (customer) {
           return { status: 200,message:"subscription completed"}
         }
@@ -60,4 +71,4 @@ export const completeSubscription = async (session_id: string) => {
     } catch (error) {
       return { status: 400,message:"internal server error"+error}
     }
-  }
+}
