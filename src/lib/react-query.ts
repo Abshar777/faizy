@@ -1,7 +1,7 @@
 'use client'
 import { QueryClient } from "@tanstack/react-query";
-import { getAllUserVideos, getWorkspaceFolders, getWorkSpaces } from "../../actions/workspace";
-import { getNotifications } from "../../actions/user";
+import { getAllUserVideos, getWorkspaceFolders, getWorkSpaces } from "@/actions/workspace";
+import { getNotifications } from "@/actions/user";
 
 
 

@@ -5,8 +5,8 @@ import {
   dehydrate,
 } from "@tanstack/react-query";
 import React, { useEffect } from "react";
-import { getPreviewVideo } from "@/../actions/video";
-import { getUserProfile } from "@/../actions/user";
+import { getPreviewVideo } from "@/actions/video";
+import { getUserProfile } from "@/actions/user";
 import VideoPreview from "@/components/global/videos/preview";
 import { VideoInfo } from "@/components/global/videos/videoInfo";
 import { useParams } from "next/navigation";

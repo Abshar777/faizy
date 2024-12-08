@@ -6,7 +6,7 @@ import Folder from "./folder";
 import { ScrollBar, ScrollArea } from "@/components/ui/scroll-area";
 import { cn } from "@/lib/utils";
 import { useQueryData } from "@/hooks/useQueryData";
-import { getWorkspaceFolders } from "../../../../actions/workspace";
+import { getWorkspaceFolders } from "@/actions/workspace";
 import { useMutationDataState } from "@/hooks/useMutation";
 import { FoldersProps } from "@/types/index.type";
 import { Skeleton } from "@nextui-org/skeleton";

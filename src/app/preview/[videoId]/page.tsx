@@ -4,8 +4,8 @@ import {
   QueryClient,
 } from "@tanstack/react-query";
 import React from "react";
-import { getPreviewVideo, getVideoComments } from "../../../../actions/video";
-import { getUserProfile } from "../../../../actions/user";
+import { getPreviewVideo, getVideoComments } from "@/actions/video";
+import { getUserProfile } from "@/actions/user";
 import VideoPreview from "@/components/global/videos/preview";
 import LandingPageNavBar from "@/app/(web)/_components/LandingPageNavBar";
 

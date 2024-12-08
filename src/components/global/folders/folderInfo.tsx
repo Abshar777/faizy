@@ -1,7 +1,7 @@
 "use client";
 import { useQueryData } from "@/hooks/useQueryData";
 import React from "react";
-import { getFolderInfo } from "../../../../actions/workspace";
+import { getFolderInfo } from "@/actions/workspace";
 import { FolderProp } from "@/types/index.type";
 import { Button } from "@nextui-org/button";
 import { ChevronLeftIcon, TrashIcon } from "lucide-react";

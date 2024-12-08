@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react"
 import { useQueryData } from "./useQueryData";
-import { searchUsers } from "../../actions/user";
+import { searchUsers } from "@/actions/user";
 import { $Enums } from "@prisma/client";
 import { TUser } from "@/types/index.type";
 

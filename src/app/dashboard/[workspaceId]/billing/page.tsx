@@ -6,7 +6,7 @@ import { FaFilePdf } from "react-icons/fa6";
 import PaymentMethod from "@/components/global/paymentMethod";
 import { ScrollArea } from "@/components/ui/scroll-area";
 import PaymentHistory from "@/components/global/paymentMethod/PaymentHistory";
-import { getPaymentInfo } from "../../../../../actions/subscription";
+import { getPaymentInfo } from "@/actions/subscription";
 
 interface Props {}
 

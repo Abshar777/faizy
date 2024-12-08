@@ -1,12 +1,12 @@
 import React from "react";
-import { getInvitations, getNotifications, onAuthenticateUser } from "../../../../actions/user";
+import { getInvitations, getNotifications, onAuthenticateUser } from "@/actions/user";
 import { redirect } from "next/navigation";
 import {
   getAllUserVideos,
   getWorkspaceFolders,
   getWorkSpaces,
   verfyAccessToWorkSapce,
-} from "../../../../actions/workspace";
+} from "@/actions/workspace";
 import {
   QueryClient,
   dehydrate,

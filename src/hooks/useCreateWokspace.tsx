@@ -1,6 +1,6 @@
 "use client";
 import { workspaceSchema } from "@/schemas/workspace.schema";
-import { createWorkspace } from "../../actions/workspace";
+import { createWorkspace } from "@/actions/workspace";
 import { useMutationData } from "./useMutation";
 import useZodForm from "./useZodForm";
 

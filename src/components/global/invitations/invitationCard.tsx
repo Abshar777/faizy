@@ -3,7 +3,7 @@ import React from "react";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { Button } from "@nextui-org/button";
 import { useMutationData } from "@/hooks/useMutation";
-import { acceptInvite } from "../../../../actions/user";
+import { acceptInvite } from "@/actions/user";
 
 interface Props {
   user: {

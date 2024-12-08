@@ -6,7 +6,7 @@ import { Button } from "@nextui-org/button";
 import { Avatar,AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { User } from "lucide-react";
 import { useMutationData } from "@/hooks/useMutation";
-import { inviteMembers } from "../../../../actions/user";
+import { inviteMembers } from "@/actions/user";
 
 interface Props {
   user: TUser;

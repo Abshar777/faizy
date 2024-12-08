@@ -1,13 +1,13 @@
 "use client";
 import { useQueryData } from "@/hooks/useQueryData";
-import { getVideoComments } from "@/../actions/video";
+import { getVideoComments } from "@/actions/video";
 import CommentForm from "@/components/forms/comment-form";
 import { TabsContent } from "@/components/ui/tabs";
 import React from "react";
 import CommentCard from "../commentCard";
 import { UserProfileProps, VideoCommentProps } from "@/types/index.type";
 import { ScrollArea } from "@/components/ui/scroll-area";
-import { getUserProfile } from "../../../../actions/user";
+import { getUserProfile } from "@/actions/user";
 
 interface Props {
   videoId: string;

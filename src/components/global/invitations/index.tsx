@@ -1,7 +1,7 @@
 "use client";
 import { useQueryData } from "@/hooks/useQueryData";
 import React from "react";
-import { acceptInvite, getInvitations } from "../../../../actions/user";
+import { acceptInvite, getInvitations } from "@/actions/user";
 import { InvitationProps } from "@/types/index.type";
 import { PiSealWarningDuotone } from "react-icons/pi";
 

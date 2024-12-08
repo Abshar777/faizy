@@ -4,7 +4,7 @@ import { DialogClose } from "@/components/ui/dialog";
 import { useCreateWokspace } from "@/hooks/useCreateWokspace";
 import { Button } from "@nextui-org/button";
 import React, { useEffect, useRef } from "react";
-import { getWorkSpaces } from "../../../../actions/workspace";
+import { getWorkSpaces } from "@/actions/workspace";
 import { useQueryClient } from "@tanstack/react-query";
 
 interface Props {}

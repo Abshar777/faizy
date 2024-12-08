@@ -2,7 +2,7 @@
 import { useQueryData } from "@/hooks/useQueryData";
 import React from "react";
 import { MdWorkspaces } from "react-icons/md";
-import { getWorkSpaces } from "../../../../actions/workspace";
+import { getWorkSpaces } from "@/actions/workspace";
 import Modal from "../modal";
 import FolderPlusDuotine from "@/components/icons/folder-plus-duotone";
 import WorkspaceForm from "@/components/forms/wokspcaForm";

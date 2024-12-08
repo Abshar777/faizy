@@ -3,7 +3,7 @@ import { useQueryData } from "@/hooks/useQueryData";
 import React, { useEffect, useRef } from "react";
 import { FaEye } from "react-icons/fa";
 import { MdDownloading } from "react-icons/md";
-import { getPreviewVideo } from "../../../../../actions/video";
+import { getPreviewVideo } from "@/actions/video";
 import { useRouter } from "nextjs-toploader/app";
 import { VideoPreviewProp } from "@/types/index.type";
 import { CopyLink } from "../copyLink";

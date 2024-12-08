@@ -3,7 +3,7 @@ import {
   getNotifications,
   getUserProfile,
   onAuthenticateUser,
-} from "@/../actions/user";
+} from "@/actions/user";
 
 import {
   Breadcrumb,
@@ -19,7 +19,7 @@ import {
   HydrationBoundary,
 } from "@tanstack/react-query";
 
-import { getPreviewVideo, getVideoComments } from "../../../../../../actions/video";
+import { getPreviewVideo, getVideoComments } from "@/actions/video";
 import VideoPreview from "@/components/global/videos/preview";
 import { VideoInfo } from "@/components/global/videos/videoInfo";
 

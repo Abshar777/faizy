@@ -1,4 +1,4 @@
-import { addViewer } from "../../actions/video";
+import { addViewer } from "@/actions/video";
 import { useMutationData } from "./useMutation";
 
 export const useUpdateViews = () => {

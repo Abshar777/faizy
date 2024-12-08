@@ -7,7 +7,7 @@ import { cn } from "@/lib/utils";
 import { Button } from "@nextui-org/button";
 import { Input } from "@/components/ui/input";
 import { useMutationData } from "@/hooks/useMutation";
-import { renameFolders } from "../../../../actions/workspace";
+import { renameFolders } from "@/actions/workspace";
 import { capitalizeWords } from "@/util/string";
 
 

@@ -13,7 +13,7 @@ import {
 import { useRouter } from "nextjs-toploader/app";
 import { usePathname } from "next/navigation";
 import { Separator } from "@/components/ui/separator";
-import { getWorkSpaces } from "../../../../actions/workspace";
+import { getWorkSpaces } from "@/actions/workspace";
 import { useQueryData } from "@/hooks/useQueryData";
 import { NotificationProps, WorkspaceProps } from "@/types/index.type";
 import Modal from "../modal";
@@ -32,7 +32,7 @@ import { useAppDispatch } from "@/store/store";
 import { WORKSPACES } from "@/store/slices/workspace";
 import { useMutationDataState } from "@/hooks/useMutation";
 import { useQueryClient } from "@tanstack/react-query";
-import { getNotifications } from "../../../../actions/user";
+import { getNotifications } from "@/actions/user";
 interface Props {
   activeWorkspaceId: string;
 }

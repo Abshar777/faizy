@@ -7,7 +7,7 @@ import { useSearch } from "@/hooks/useSearch";
 import { AvatarFallback, AvatarImage } from "@radix-ui/react-avatar";
 import { User } from "lucide-react";
 import React from "react";
-import { inviteMembers } from "../../../../actions/user";
+import { inviteMembers } from "@/actions/user";
 import { ScrollArea } from "@/components/ui/scroll-area";
 import SearchUser from "./searchUser";
 

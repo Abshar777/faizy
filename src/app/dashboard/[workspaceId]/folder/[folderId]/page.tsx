@@ -7,7 +7,7 @@ import React from "react";
 import {
   getAllUserVideos,
   getFolderInfo,
-} from "../../../../../../actions/workspace";
+} from "@/actions/workspace";
 import FolderInfo from "@/components/global/folders/folderInfo";
 import Videos from "@/components/global/videos";
 

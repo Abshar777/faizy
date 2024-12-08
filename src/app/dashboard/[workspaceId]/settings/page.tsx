@@ -1,5 +1,5 @@
 'use client'
-import { enableFirstView, getFirstView } from '@/../actions/user'
+import { enableFirstView, getFirstView } from '@/actions/user'
 import { DarkMode } from '@/components/theme/dark.mode'
 import { LightMode } from '@/components/theme/light-mode'
 import { SystemMode } from '@/components/theme/system-mode'

@@ -2,7 +2,7 @@
 import { useQueryData } from "@/hooks/useQueryData";
 import React from "react";
 import { PiSealWarningDuotone, PiSealWarningFill } from "react-icons/pi";
-import { getAllUserVideos } from "../../../../actions/workspace";
+import { getAllUserVideos } from "@/actions/workspace";
 import { VideosProps } from "@/types/index.type";
 import { ArrowRight, SortDescIcon } from "lucide-react";
 import VideoRecorderDuotone from "@/components/icons/video-recorder-duotone";

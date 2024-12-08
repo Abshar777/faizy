@@ -1,7 +1,7 @@
 "use client";
 import { useQueryData } from "@/hooks/useQueryData";
 import React from "react";
-import { getNotifications } from "../../../../actions/user";
+import { getNotifications } from "@/actions/user";
 import { PiSealWarningDuotone } from "react-icons/pi";
 
 import { AvatarFallback, AvatarImage, Avatar } from "@/components/ui/avatar";
