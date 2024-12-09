@@ -333,7 +333,7 @@ export const acceptInvite = async (inviteId: string) => {
                 },
             },
         })
-
+        if (!invitation) return { status: 404, message: "Invitation not found" }
         if (user.id !== invitation?.reciever?.clerkid) return { status: 401, message: "Unauthorized" }
         const acceptInvite = client.invite.update({
             where: {
@@ -345,7 +345,7 @@ export const acceptInvite = async (inviteId: string) => {
         })
         await client.user.update({
             where: {
-                clerkid: invitation.sender?.clerkid,
+                clerkid: invitation?.sender?.clerkid,
             },
             data: {
                 notification: {
@@ -368,7 +368,7 @@ export const acceptInvite = async (inviteId: string) => {
             data: {
                 members: {
                     create: {
-                        workSpaceId: invitation.workSpaceId,
+                        workSpaceId: invitation?.workSpaceId,
                     },
                 },
             },
