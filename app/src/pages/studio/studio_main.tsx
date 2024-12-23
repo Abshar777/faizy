@@ -1,11 +1,11 @@
 import React from "react";
 import ReactDOM from "react-dom/client";
-import App from "./App.tsx";
-import "./index.css";
+import App from "./studio_app.tsx";
+import "../../assets/css/index.css";
 import { ClerkProvider } from "@clerk/clerk-react";
 import { NextUIProvider } from "@nextui-org/react";
-import { ThemeProvider } from "./components/theme/theme-provider";
-import ReactQueryProvider from "./react-query/index.tsx";
+import { ThemeProvider } from "../../components/theme/theme-provider.tsx";
+import ReactQueryProvider from "../../react-query/index.tsx";
 import { Toaster } from "sonner";
 
 const PUBLISHABLE_KEY = import.meta.env.VITE_CLERK_PUBLISHABLE_KEY;

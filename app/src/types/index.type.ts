@@ -14,7 +14,7 @@ export type TStudio = {
     id: string;
     screen: string;
     mic: string | null;
-    preset: string | null;
+    preset: "HD" | "SD" | undefined;
     camera: string | null;
     userId: string;
 }

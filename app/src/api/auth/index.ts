@@ -20,9 +20,4 @@ export const getProfile = async (id: string) => {
 };
 
 
-export const getMediaResourse = async () => {
-    const displays=await window.ipcRenderer.invoke("getSources");
-    const enumerateDevices=await window.navigator.mediaDevices.enumerateDevices();
-    const audioInputs=enumerateDevices.filter(device=>device.kind==="audioinput");
-   return {displays,audio:audioInputs}
-}
+

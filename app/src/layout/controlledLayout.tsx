@@ -2,7 +2,7 @@ import { cn } from "@/lib/utils";
 import { useState } from "react";
 import { UserButton, useUser } from "@clerk/clerk-react";
 import { X } from "lucide-react";
-import { onCloseApp } from "../shared/utils";
+import { onCloseApp } from "../lib/utils";
 import { Button } from "@nextui-org/button";
 import { Image } from "@nextui-org/react";
 import AuthButton from "@/components/global/authButton";
@@ -25,14 +25,14 @@ const ControlledLayout = ({ children, className }: Props) => {
       className={cn(
         visible && "invisible",
         className,
-        " flex px-1 bg-primary  flex-col  overflow-hidden h-screen"
+        " flex px-1 bg-primary rounded-xl relative z-[9999999999]  flex-col  overflow-hidden h-screen"
       )}
     >
-      <div className="flex justify-between items-center px-5 draggable ">
+      <div className="flex justify-between items-center px-5  ">
         <span className="non-draggable">
           {user ? <UserButton /> : <AuthButton />}
         </span>
-        <div className="   ">
+        <div className=" draggable  w-full flex justify-center items-center">
           <Image src="/Faizy.svg" alt="Faizy" width={70} height={70} />
         </div>
         <Button
