@@ -18,12 +18,20 @@ export const useStudioSetting = (
     }
     const { mutate, isPending, } = useMutationData(
         ['upadete-studio'],
-        (data:{ screen: string, audio: string, preset: "HD" | "SD" }) => updateStudioSetting(id, data.screen, data.audio, data.preset),
+        async (data: { screen: string, audio: string, preset: "HD" | "SD" }) => {
+            window.ipcRenderer.send("media-sources", {
+                screen,
+                audio,
+                preset
+            })
+            return await updateStudioSetting(id, data.screen, data.audio, data.preset)
+
+        },
         "studio-settings",
         onSuccess
     );
 
-    const { register, watch, setValue, onFormSubmit } = useZodForm(studioSettingsSchema, mutate, {
+    const { register, watch, setValue, onFormSubmit, getValues } = useZodForm(studioSettingsSchema, mutate, {
         screen,
         audio,
         preset,
@@ -31,28 +39,26 @@ export const useStudioSetting = (
 
     useEffect(() => {
         if (screen && audio && preset) {
-            window.ipcRenderer.send("media-sources", {
-                screen,
-                audio,
-                preset
-            })
-        }
-    }, [onPreset]);
-    useEffect(() => {
-        const subscription = watch((values) => {
-            setonPreset(values.preset);
-            if (values.screen && values.audio && values.preset) {
-                mutate({ id, screen: values.screen, audio: values.audio, preset: values.preset });
-                window.ipcRenderer.send("media-sources", {
-                    screen: values.screen,
-                    audio: values.audio,
-                    preset: values.preset
-                })
-            }
-        });
-        return () => subscription.unsubscribe();
-    }, [watch]);
 
-    return { register, isPending, setValue, onFormSubmit }
+        }
+    }, []);
+    // useEffect(() => {
+    //     const subscription = watch((values) => {
+    //         setonPreset(values.preset);
+    //         if (values.screen && values.audio && values.preset) {
+    //             console.log("keriiii",values);
+
+    //             mutate({ id, screen: values.screen, audio: values.audio, preset: values.preset });
+    //             window.ipcRenderer.send("media-sources", {
+    //                 screen: values.screen,
+    //                 audio: values.audio,
+    //                 preset: values.preset
+    //             })
+    //         }
+    //     });
+    //     return () => subscription.unsubscribe();
+    // }, [watch]);
+
+    return { register, isPending, setValue, onFormSubmit, getValues }
 
 }

@@ -29,19 +29,22 @@ let floatingWebCam: BrowserWindow | null
 
 function createWindow() {
   win = new BrowserWindow({
-    width: 300,
+    width: 400,
     height: 300,
     minHeight: 300,
-    minWidth: 300,
+    minWidth: 400,
+    maxHeight:300,
+    maxWidth:400,
     frame: false,
     title: "Faizy",
     fullscreenable: false,
     fullscreen: false,
     // backgroundColor:"transparent",
     roundedCorners: true,
+    simpleFullscreen:false,
     // transparent:true,
-    alwaysOnTop: true,
-    focusable: true,
+    // alwaysOnTop: true,
+    // focusable: true,
     icon: path.join(process.env.VITE_PUBLIC, 'Faizy.svg'),
     webPreferences: {
       preload: path.join(__dirname, 'preload.mjs'),
@@ -54,13 +57,18 @@ function createWindow() {
 
   studio = new BrowserWindow({
     width: 300,
-    height: 50,
-    minHeight: 70,
-    maxHeight: 300,
+    height: 30,
+    minHeight: 30,
+    maxHeight: 30,
     minWidth: 300,
     maxWidth: 300,
     frame: false,
-    title: "Faizy",
+
+    roundedCorners:true,
+    fullscreen:false,
+    fullscreenable:false,
+    simpleFullscreen:false,
+    title: "Faizy studio",
     icon: path.join(process.env.VITE_PUBLIC, 'Faizy.svg'),
     webPreferences: {
       preload: path.join(__dirname, 'preload.mjs'),
@@ -80,7 +88,7 @@ function createWindow() {
     maxWidth: 400,
     frame: false,
     roundedCorners: true,
-    title: "Faizy",
+    title: "Faizy - floating WebCam",
     fullscreenable: false,
     fullscreen: false,
     icon: path.join(process.env.VITE_PUBLIC, 'Faizy.svg'),
@@ -103,8 +111,9 @@ function createWindow() {
   floatingWebCam.webContents.on('did-finish-load', () => {
     floatingWebCam?.webContents.send('main-process-message', (new Date).toLocaleString())
   })
+  floatingWebCam?.hide();
   win.setVisibleOnAllWorkspaces(true, { visibleOnFullScreen: true });
-  win.setAlwaysOnTop(true, 'screen-saver', 1);
+  // win.setAlwaysOnTop(true, 'screen-saver', 1);
   studio.setVisibleOnAllWorkspaces(true, { visibleOnFullScreen: true });
   studio.setAlwaysOnTop(true, 'screen-saver', 1);
   // floatingWebCam.setVisibleOnAllWorkspaces(true,{visibleOnFullScreen:true});
@@ -136,7 +145,7 @@ app.on('window-all-closed', () => {
 })
 
 ipcMain.on('close-window', (event, arg) => {
-  console.log("close-window");
+  // console.log("close-window");
 
   if (process.platform !== 'darwin') {
     app.quit()
@@ -175,10 +184,30 @@ ipcMain.on("hide-plugin", (event, payload) => {
   win?.webContents.send("hide-plugin", payload);
 })
 
+ipcMain.on("startPreview",(event,payload)=>{
+  // console.log(payload,"statrt pre")
+  win?.webContents.send("startPreview",{payload})
+})
+
+
+ipcMain.on("play-video",(event,payload)=>{
+  // console.log(payload,"stream payload");
+  
+  win?.webContents.send("play-video",payload)
+})
+
+
+ipcMain.on("hide-floating-webcam", (event, payload) => {
+  floatingWebCam?.hide();
+});
+
+ipcMain.on("show-floating-webcam", (event, payload) => {
+  floatingWebCam?.show();
+});
+
 
 ipcMain.on("media-sources", (event, payload) => {
   studio?.webContents.send("profile-recieved", payload);
-
 })
 
 

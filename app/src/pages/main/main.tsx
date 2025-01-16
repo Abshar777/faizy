@@ -21,7 +21,7 @@ ReactDOM.createRoot(document.getElementById("root")!).render(
         <ThemeProvider defaultTheme="dark" storageKey="vite-ui-theme">
           <ReactQueryProvider>
             <App />
-            <Toaster  position="bottom-center" richColors theme="dark" />
+            <Toaster  position="bottom-left" richColors theme="dark" />
           </ReactQueryProvider>
         </ThemeProvider>
       </NextUIProvider>

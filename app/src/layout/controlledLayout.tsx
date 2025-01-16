@@ -1,5 +1,5 @@
 import { cn } from "@/lib/utils";
-import { useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { UserButton, useUser } from "@clerk/clerk-react";
 import { X } from "lucide-react";
 import { onCloseApp } from "../lib/utils";
@@ -14,18 +14,36 @@ interface Props {
 
 const ControlledLayout = ({ children, className }: Props) => {
   const { user } = useUser();
-
+  const [videoState, setvideoState] = useState(false);
+  const videoElement = useRef<HTMLVideoElement>(null);
   const [visible, setvisible] = useState(false);
   window.ipcRenderer.on("hide-plugin", (event, payload) => {
-    console.log(event);
     setvisible(payload.state);
   });
+  window.ipcRenderer.on("play-video", async (event, payload) => {
+    if (videoElement && videoElement.current) {
+      const stream=await navigator.mediaDevices.getUserMedia(payload.constrains);
+      
+      videoElement.current.srcObject =stream
+        
+      await videoElement.current.play();
+    }
+  });
+
+  window.ipcRenderer.on("startPreview", (event, {payload}) => {
+    // console.log("previwe on main");
+    setvideoState(payload.state);
+  });
+
+  useEffect(()=>{
+    console.log("changed state",videoState)
+  },[videoState])
+
   return (
     <div
       className={cn(
-        visible && "invisible",
         className,
-        " flex px-1 bg-primary rounded-xl relative z-[9999999999]  flex-col  overflow-hidden h-screen"
+        " flex px-1 bg-primary rounded-xl relative   flex-col  overflow-hidden h-screen"
       )}
     >
       <div className="flex justify-between items-center px-5  ">
@@ -44,7 +62,21 @@ const ControlledLayout = ({ children, className }: Props) => {
           <X className="cursor-pointer" onClick={onCloseApp} />
         </Button>
       </div>
-      {children}
+      {!visible&&!videoState && children}
+
+      <video
+        autoPlay
+        ref={videoElement}
+        className={cn("w-full  rounded-md h-full hidden object-cover",videoState&&"block")}
+      />
+      
+      {visible && !videoState && (
+        <>
+          <div className="w-full h-full flex items-center justify-center">
+            <h1>recording..</h1>
+          </div>
+        </>
+      )}
     </div>
   );
 };

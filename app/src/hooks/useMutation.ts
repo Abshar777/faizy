@@ -14,7 +14,7 @@ export const useMutationData = (mutationKey: MutationKey,
             toast.error(error.message?.toString())
         },
         onSuccess(data) {
-            console.log(data,'data');
+            // console.log(data,'data');
             
             if (onSuccess) return onSuccess(data);
             if (data.status === 200) return toast.success(data.message)

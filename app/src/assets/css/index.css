@@ -175,6 +175,7 @@ html{
 
 .no-draggable{
   -webkit-app-region: no-drag;
+
 }
 
 ::-webkit-scrollbar{
