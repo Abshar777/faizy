@@ -30,6 +30,7 @@ export const startRecording = (onSource: TOnSource) => {
 }
 
 export const onDataAvailable = (e: BlobEvent) => {
+    // alert("running")
     socket.emit("video-chunks", {
         chunks: e.data,
         fileName: videoTransferFileName
@@ -57,7 +58,7 @@ export const videoRecordTime = (ms: number) => {
 
 export const selectSource = async (onSource: TOnSource,userID:string) => {
     if (onSource && onSource.screen && onSource.audio) {
-        userId=userId;
+        userId=userID;
         const constrains: any = {
             audio: false,
             video: {

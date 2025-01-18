@@ -12,6 +12,7 @@ export const useStudioSetting = (
     preset?: "HD" | "SD",
     plan?: "PRO" | "FREE"
 ) => {
+    console.log(screen)
     const [onPreset, setonPreset] = useState<"HD" | "SD" | undefined>();
     const onSuccess = () => {
         toast.success("Studio settings updated successfully");

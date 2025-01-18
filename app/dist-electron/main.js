@@ -1,4 +1,4 @@
-import { app, ipcMain, desktopCapturer, BrowserWindow } from "electron";
+import { app, ipcMain, desktopCapturer, BrowserWindow, screen } from "electron";
 import { fileURLToPath } from "node:url";
 import path from "node:path";
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
@@ -58,14 +58,15 @@ function createWindow() {
     }
   });
   floatingWebCam = new BrowserWindow({
-    width: 400,
+    width: 300,
     height: 200,
-    minHeight: 70,
-    maxHeight: 400,
+    minHeight: 200,
+    maxHeight: 200,
     minWidth: 300,
-    maxWidth: 400,
+    maxWidth: 300,
     frame: false,
     roundedCorners: true,
+    minimizable: true,
     title: "Faizy - floating WebCam",
     fullscreenable: false,
     fullscreen: false,
@@ -77,6 +78,22 @@ function createWindow() {
       devTools: true
     }
   });
+  floatingWebCam.once("ready-to-show", () => {
+    const { width, height } = screen.getPrimaryDisplay().workAreaSize;
+    const windowWidth = 300;
+    const windowHeight = 200;
+    const x = width - windowWidth - 10;
+    const y = height - windowHeight - 10;
+    floatingWebCam == null ? void 0 : floatingWebCam.setBounds({ x, y, width: windowWidth, height: windowHeight });
+  });
+  studio.once("ready-to-show", () => {
+    const { width, height } = screen.getPrimaryDisplay().workAreaSize;
+    const windowWidth = 300;
+    const windowHeight = 30;
+    const x = Math.floor((width - windowWidth) / 2);
+    const y = height - windowHeight - 50;
+    studio == null ? void 0 : studio.setBounds({ x, y, width: windowWidth, height: windowHeight });
+  });
   win.webContents.on("did-finish-load", () => {
     win == null ? void 0 : win.webContents.send("main-process-message", (/* @__PURE__ */ new Date()).toLocaleString());
   });
@@ -86,10 +103,12 @@ function createWindow() {
   floatingWebCam.webContents.on("did-finish-load", () => {
     floatingWebCam == null ? void 0 : floatingWebCam.webContents.send("main-process-message", (/* @__PURE__ */ new Date()).toLocaleString());
   });
-  floatingWebCam == null ? void 0 : floatingWebCam.hide();
+  floatingWebCam == null ? void 0 : floatingWebCam.close();
   win.setVisibleOnAllWorkspaces(true, { visibleOnFullScreen: true });
   studio.setVisibleOnAllWorkspaces(true, { visibleOnFullScreen: true });
   studio.setAlwaysOnTop(true, "screen-saver", 1);
+  floatingWebCam.setVisibleOnAllWorkspaces(true, { visibleOnFullScreen: true });
+  floatingWebCam.setAlwaysOnTop(true, "screen-saver", 1);
   if (VITE_DEV_SERVER_URL) {
     win.loadURL(VITE_DEV_SERVER_URL);
     studio.loadURL(`${"http://localhost:5173"}/studio.html`);

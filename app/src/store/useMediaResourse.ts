@@ -12,6 +12,7 @@ export const useMediaResourse = create<MediaResourceState>((set) => ({
     audioInputs: [],
     error: null,
     isPending: false,
+    selectScreen:null,
     fetchMediaResourse: async () => {
         set({ isPending: true });
         try {

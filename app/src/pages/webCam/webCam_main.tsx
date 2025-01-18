@@ -18,12 +18,12 @@ ReactDOM.createRoot(document.getElementById("root")!).render(
   <React.StrictMode>
     <ClerkProvider publishableKey={PUBLISHABLE_KEY} afterSignOutUrl="/">
       <NextUIProvider>
-        <ThemeProvider defaultTheme="dark" storageKey="vite-ui-theme">
+        {/* <ThemeProvider defaultTheme="dark" storageKey="vite-ui-theme"> */}
           <ReactQueryProvider>
             <App />
             <Toaster  position="bottom-center" richColors theme="dark" />
           </ReactQueryProvider>
-        </ThemeProvider>
+        {/* </ThemeProvider> */}
       </NextUIProvider>
     </ClerkProvider>
   </React.StrictMode>

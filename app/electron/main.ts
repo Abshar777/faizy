@@ -1,7 +1,7 @@
 import { app, BrowserWindow, desktopCapturer, ipcMain } from 'electron'
 import { fileURLToPath } from 'node:url'
 import path from 'node:path'
-
+import { screen } from 'electron';
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url))
 
@@ -80,14 +80,16 @@ function createWindow() {
   })
 
   floatingWebCam = new BrowserWindow({
-    width: 400,
+    width: 300,
     height: 200,
-    minHeight: 70,
-    maxHeight: 400,
+    minHeight: 200,
+    maxHeight: 200,
     minWidth: 300,
-    maxWidth: 400,
+    maxWidth: 300,
     frame: false,
     roundedCorners: true,
+    minimizable:true,
+
     title: "Faizy - floating WebCam",
     fullscreenable: false,
     fullscreen: false,
@@ -101,6 +103,28 @@ function createWindow() {
     },
   })
 
+  floatingWebCam.once('ready-to-show', () => {
+    const { width, height } = screen.getPrimaryDisplay().workAreaSize; // Get screen dimensions
+    const windowWidth = 300; 
+    const windowHeight = 200; 
+
+    const x = width - windowWidth - 10; 
+    const y = height - windowHeight - 10 ; 
+
+    floatingWebCam?.setBounds({ x, y, width: windowWidth, height: windowHeight });
+  });
+
+  studio.once('ready-to-show', () => {
+    const { width, height } = screen.getPrimaryDisplay().workAreaSize; 
+    const windowWidth = 300; 
+    const windowHeight = 30; 
+
+    const x = Math.floor((width - windowWidth) / 2); 
+    const y = height - windowHeight - 50; 
+
+    studio?.setBounds({ x, y, width: windowWidth, height: windowHeight });
+  });
+
   // Test active push message to Renderer-process.
   win.webContents.on('did-finish-load', () => {
     win?.webContents.send('main-process-message', (new Date).toLocaleString())
@@ -111,13 +135,14 @@ function createWindow() {
   floatingWebCam.webContents.on('did-finish-load', () => {
     floatingWebCam?.webContents.send('main-process-message', (new Date).toLocaleString())
   })
-  floatingWebCam?.hide();
+  floatingWebCam?.close()
+  // floatingWebCam?.hide();
   win.setVisibleOnAllWorkspaces(true, { visibleOnFullScreen: true });
   // win.setAlwaysOnTop(true, 'screen-saver', 1);
   studio.setVisibleOnAllWorkspaces(true, { visibleOnFullScreen: true });
   studio.setAlwaysOnTop(true, 'screen-saver', 1);
-  // floatingWebCam.setVisibleOnAllWorkspaces(true,{visibleOnFullScreen:true});
-  // floatingWebCam.setAlwaysOnTop(true, 'screen-saver',1);
+  floatingWebCam.setVisibleOnAllWorkspaces(true,{visibleOnFullScreen:true});
+  floatingWebCam.setAlwaysOnTop(true, 'screen-saver',1);
 
   if (VITE_DEV_SERVER_URL) {
     win.loadURL(VITE_DEV_SERVER_URL)

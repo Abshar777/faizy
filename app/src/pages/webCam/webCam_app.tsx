@@ -1,18 +1,29 @@
 import { cn } from "@/lib/utils";
-import React, { useRef, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 
 interface Props {}
 
 const WebCam_app = (props: Props) => {
-  const [preview, setpreview] = useState(false);
-  const videoElement = useRef<HTMLVideoElement>(null);
+  const camElment = useRef<HTMLVideoElement>(null);
+  const streamCam = async () => {
+    const stream = await navigator.mediaDevices.getUserMedia({
+      video: true,
+      audio: true,
+    });
+    if (camElment.current) {
+      camElment.current.srcObject = stream;
+      await camElment.current.play();
+    }
+  };
+  useEffect(() => {
+    streamCam();
+  }, []);
   return (
-    <div className="w-full h-screen flex flex-col justify-end gap-y-5  draggable ">
+    <div className="h-screen w-full">
       <video
-        autoPlay
-        ref={videoElement}
-        className={cn("w-6/12 border-2 self-end ", preview && "hidden")}
-      />
+        ref={camElment}
+        className="h-full scale-x-[-1] w-full draggable rounded-lg object-cover border-2 relative border-white"
+      ></video>
     </div>
   );
 };
