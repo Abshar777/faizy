@@ -52,44 +52,56 @@ export class socketHandle {
 
     async handleProccesingAudioFile(data: TprocessVideo) {
         try {
-            const processing = await axios.post(`${process.env.NEXT_API_HOST}recording/${data.userId}/processing`)
+            console.log("🟠 proccesing audio started")
             this.audioRecorderdedChunks = [];
-           await createTranscription(data.fileName, data.userId)
+            const processing = await axios.post(`${process.env.NEXT_API_HOST}recording/${data.userId}/processing`, {
+                fileName: data.fileName
+            });
+            if (processing.data.plan == "PRO") await createTranscription(data.fileName, data.userId);
+            else {
+                fs.unlinkSync(path.join(TEMPDIR + "/audio/", data.fileName));
+                console.log("he is not pro 🔵,audio file dlted succefully 🟢");
+            }
+
         } catch (error) {
-            console.log(error,"🔴 post to next api, when proccesing the audio file")
+            console.log((error as Error).message, "🔴 post to next api, when proccesing the audio file")
         }
     }
 
 
 
 
-    // async handleProcessingOfVideo(data: TprocessVideo) {
-    //     this.recorderdChunks = [];
-    //     fs.readFile(path.join(TEMPDIR,data.fileName),async(err,file)=>{
-    //        try {
-    //         const processing=await axios.post(`${process.env.NEXT_API_HOST}recording/${data.userId}/processing`)
-    //         if(processing.data.status!==200) return console.log("🔴 post to next api");
-    //         const Key=data.fileName;
-    //         const Bucket=process.env.BUCKET_NAME;
-    //         const ContentType="video/webm";
-    //         const Command=new PutObjectCommand({
-    //             Key,
-    //             Bucket,
-    //             ContentType,
-    //             Body:file
-    //         })
-    //         const fileStatus=await s3.send(Command)
-    //         if(fileStatus['$metadata'].httpStatusCode===200) console.log("🟢 succesfully video upload to s3 bucket");
-
-    //         // pro plan feature
-    //         if(processing.data.plan==="PRO"){
-
-    //         }
-
-    //        } catch (error) {
-    //         console.log(error,"🔴 post to next api")
-    //        }
-    //     })
-    // }
+    async handleProcessingOfVideo(data: TprocessVideo) {
+        console.log("🟠 processing video.. ", data);
+        this.recorderdChunks = [];
+        fs.readFile(path.join(TEMPDIR+'/video/', data.fileName), async (err, file) => {
+            try {
+                if(err) return console.log("🔴 error on when reading that video file ",err.message)
+                const Key = data.fileName;
+                const Bucket = process.env.BUCKET_NAME;
+                const ContentType = "video/webm";
+                const Command = new PutObjectCommand({
+                    Key,
+                    Bucket,
+                    ContentType,
+                    Body: file
+                })
+                const fileStatus = await s3.send(Command)
+                if (fileStatus['$metadata'].httpStatusCode === 200) console.log("🟢 succesfully video upload to s3 bucket");
+                else console.log("🔴 error on uploading to s3")
+                const stopProcessing = await axios.post(`${process.env.NEXT_API_HOST}recording/${data.userId}/complete`, {
+                    fileName: data.fileName
+                })
+                if (stopProcessing.status == 200) {
+                    fs.unlinkSync(path.join(TEMPDIR + "/video/", data.fileName));
+                    console.log("video file deleted succefully 🟢");
+                } else {
+                    console.log("🔴 post to next api, cannot delete the video file")
+                }
+            } catch (error) {
+                console.log((error as Error).message, "🔴 post to next api")
+            }
+        })
+    }
 
 }
