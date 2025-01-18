@@ -1,8 +1,6 @@
 import { hidePluginWindow } from "./windows";
 import { v4 as uuid } from "uuid";
 import { io } from "socket.io-client"
-import { getProfile } from "@/api/auth";
-import { useUser } from "@clerk/clerk-react";
 
 
 
@@ -16,36 +14,77 @@ export type TOnSource = {
 let mediaRecorder: MediaRecorder;
 let videoTransferFileName: string | undefined;
 let userId: string;
+let isRecording = false;
+let audioRecorder: MediaRecorder;
 
 
 // socket 
-const socket = io(import.meta.env.VITE_SOCKET_URL as string);
+const socket = io("http://localhost:3001", { transports: ["websocket", "polling"] });
 
 
 
 export const startRecording = (onSource: TOnSource) => {
+    console.log("called");
+
+    isRecording = true;
     hidePluginWindow(true);
-    videoTransferFileName = `${uuid()}.webm`
-    mediaRecorder.start(100)
+    videoTransferFileName = `${uuid()}.webm`;
+    mediaRecorder.start(100);
+    audioRecorder.start(100);
 }
 
 export const onDataAvailable = (e: BlobEvent) => {
-    // alert("running")
-    socket.emit("video-chunks", {
-        chunks: e.data,
-        fileName: videoTransferFileName
-    })
+
+    if (isRecording) {
+        // console.log("runnigg")
+        socket.emit("video-chunks", {
+            chunks: e.data,
+            fileName: videoTransferFileName,
+        })
+    }
 }
 
 
-export const onStopRecording = () => mediaRecorder.stop();
+export const onAudioDataAvailable = (e: BlobEvent) => {
+    // alert("running")
+    // console.log("on audio avaible ");
+
+    if (isRecording) {
+        // console.log("runnigg auido")
+        socket.emit("auido-chunks", {
+            chunks: e.data,
+            fileName: videoTransferFileName?.split(".")[0]+".mp3",
+        })
+    }
+}
+
+
+export const onStopRecording = () => {
+    isRecording = false;
+    mediaRecorder.stop();
+    audioRecorder.stop();
+}
 
 export const stopRecording = () => {
     // hidePluginWindow(false);
+    console.log("proccesss video");
+
     socket.emit("process-video", {
         fileName: videoTransferFileName,
         userId
     })
+
+}
+
+export const stopAuidoRecording = () => {
+    // hidePluginWindow(false);
+    console.log("proccesss audio");
+
+    socket.emit("process-audio", {
+        fileName:videoTransferFileName?.split(".")[0]+".mp3" ,
+        userId
+    })
+
 }
 
 export const videoRecordTime = (ms: number) => {
@@ -56,9 +95,10 @@ export const videoRecordTime = (ms: number) => {
 }
 
 
-export const selectSource = async (onSource: TOnSource,userID:string) => {
+export const selectSource = async (onSource: TOnSource | null, userID: string | null) => {
+    if (!userID) return
     if (onSource && onSource.screen && onSource.audio) {
-        userId=userID;
+        userId = userID;
         const constrains: any = {
             audio: false,
             video: {
@@ -73,7 +113,7 @@ export const selectSource = async (onSource: TOnSource,userID:string) => {
                 }
             }
         }
-      
+
         const stream = await navigator.mediaDevices.getUserMedia(constrains);
         const audioStreame = await navigator.mediaDevices.getUserMedia({
             video: false,
@@ -87,9 +127,14 @@ export const selectSource = async (onSource: TOnSource,userID:string) => {
         mediaRecorder = new MediaRecorder(combineStream, {
             mimeType: "video/webm; codecs=vp9",
         })
+        audioRecorder = new MediaRecorder(audioStreame, {
+            mimeType: "audio/webm",
+        });
         // console.log(mediaRecorder, "media recorder")
         mediaRecorder.ondataavailable = onDataAvailable
-        mediaRecorder.onstart = stopRecording
+        mediaRecorder.onstart = stopRecording;
+        audioRecorder.ondataavailable = onAudioDataAvailable;
+        audioRecorder.onstop= stopAuidoRecording
     }
 }
 

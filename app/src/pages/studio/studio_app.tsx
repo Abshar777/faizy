@@ -36,61 +36,58 @@ const Studio_app = (props: Props) => {
 
   useEffect(() => {
     if (!recording) return;
-    const recordTimeIntreval = setInterval(() => {
-      const time = count + (new Date().getTime() - initialTime.getTime());
-      setcount(time);
-      const recordingTime: {
-        length: string;
-        minute: string;
-      } = videoRecordTime(time);
-      if (onSource?.plan == "FREE" && recordingTime.minute == "05") {
+    const intervalId = setInterval(() => {
+      const elapsed = count + (new Date().getTime() - initialTime.getTime());
+      setcount(elapsed);
+      const recordingTime = videoRecordTime(elapsed);
+      if (onSource?.plan === "FREE" && recordingTime.minute === "05") {
         setRecording(false);
         clearTime();
         onStopRecording();
       }
       settimer(recordingTime.length);
-      if (time <= 0) {
-        settimer("00:00:00");
-        clearInterval(recordTimeIntreval);
-      }
-    }, 1);
+    }, 1000); // Use 1000ms (1s) to avoid performance issues
 
-    return () => clearInterval(recordTimeIntreval);
+    return () => clearInterval(intervalId); // Cleanup
   }, [recording]);
+
   const { user } = useUser();
   useEffect(() => {
-    if (onSource && onSource.screen && user) selectSource(onSource, user.id);
+    if ( onSource && onSource.screen && user) {
+      selectSource(onSource, user.id)
+      
+    }
     return () => {
-      selectSource(onSource!, "");
+      selectSource(null, null);
     };
-  }, [onSource]);
+  }, [ onSource, user]);
 
-  useEffect(()=>{
-    hidePluginWindow(recording  )
-  },[recording])
+  useEffect(() => {
+    hidePluginWindow(recording);
+  }, [recording]);
 
   return onSource ? (
     <div className="w-full  draggable h-screen flex items-center justify-between p-2">
       <div
         {...(onSource && {
-          onClick: () => {
-            if (!recording) {
-              setRecording(true);
-              startRecording(onSource);
+          onClick: async () => {
+            if (!recording && user) {
+              // setTimeout(()=>{
+               setRecording(true);
+                startRecording(onSource)
+            //  },1000)
             } else {
-              clearTime()
-              stopRecording();
+              clearTime();
+              onStopRecording();
               setRecording(false);
-              startPreview(false)
-              setcast(false)
+              startPreview(false);
+              setcast(false);
             }
           },
         })}
         className={cn(
           " duration-[.2] ease-in cursor-pointer   no-draggable  w-[1.5rem] h-[1.5rem] bg-red-900",
-          recording
-            ? "animate-pulse   rounded-sm"
-            : "rounded-full"
+          recording ? "animate-pulse   rounded-sm" : "rounded-full"
         )}
       />
       {recording && <span className="">{timer}</span>}
@@ -110,7 +107,7 @@ const Studio_app = (props: Props) => {
         className="no-draggable cursor-pointer"
         onClick={() => {
           startPreview(!cast);
-          setcast(!cast)
+          setcast(!cast);
         }}
       />
     </div>
