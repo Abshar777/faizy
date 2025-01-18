@@ -1,27 +1,30 @@
 import React from "react";
 import {
-    Tooltip,
-    TooltipContent,
-    TooltipProvider,
-    TooltipTrigger,
-  } from "@/components/ui/tooltip"
+  Tooltip,
+  TooltipContent,
+  TooltipProvider,
+  TooltipTrigger,
+} from "@/components/ui/tooltip";
 
 interface Props {
-    trigger: React.ReactNode;
-    content: React.ReactNode;       
-    side?: "top" | "bottom" | "left" | "right";
+  trigger: React.ReactNode;
+  content: React.ReactNode;
+  side?: "top" | "bottom" | "left" | "right";
 }
 
-const TooltipUI = ({trigger, content, side="bottom"}: Props) => {
+const TooltipUI = ({ trigger, content, side = "bottom" }: Props) => {
   return (
-   
-      <Tooltip >
+    <TooltipProvider>
+      <Tooltip>
         <TooltipTrigger>{trigger}</TooltipTrigger>
-        <TooltipContent className="bg-muted-foreground/20 backdrop-blur-md text-secondary-foreground" side={side}>
+        <TooltipContent
+          className="bg-muted-foreground/20 backdrop-blur-md text-secondary-foreground"
+          side={side}
+        >
           {content}
         </TooltipContent>
       </Tooltip>
-  
+    </TooltipProvider>
   );
 };
 
