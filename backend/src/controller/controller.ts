@@ -55,8 +55,10 @@ export class socketHandle {
             console.log("🟠 proccesing audio started")
             this.audioRecorderdedChunks = [];
             const processing = await axios.post(`${process.env.NEXT_API_HOST}recording/${data.userId}/processing`, {
-                fileName: data.fileName
+                fileName: data.fileName.split(".")[0]+".webm"
             });
+            console.log(processing.status,processing.data);
+            
             if (processing.data.plan == "PRO") await createTranscription(data.fileName, data.userId);
             else {
                 fs.unlinkSync(path.join(TEMPDIR + "/audio/", data.fileName));

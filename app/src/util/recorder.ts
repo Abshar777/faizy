@@ -132,7 +132,7 @@ export const selectSource = async (onSource: TOnSource | null, userID: string | 
         });
         // console.log(mediaRecorder, "media recorder")
         mediaRecorder.ondataavailable = onDataAvailable
-        mediaRecorder.onstart = stopRecording;
+        mediaRecorder.onstop = stopRecording;
         audioRecorder.ondataavailable = onAudioDataAvailable;
         audioRecorder.onstop= stopAuidoRecording
     }
