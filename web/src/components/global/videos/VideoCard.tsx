@@ -42,6 +42,27 @@ const VideoCard = (props: Props) => {
     (new Date().getTime() - new Date(props.createdAt).getTime()) /
       (1000 * 60 * 60 * 24)
   );
+  let src = props.source;
+  let stremUrl =
+    process.env.NEXT_PUBLIC_CLOUD_FRONT_STREAM_URL ||
+    "https://d3m6ajsnw89gp6.cloudfront.net";
+
+  if (props.title !== "Source Fight" && props.title !== "Agenet Fight") {
+    src = `${stremUrl}/${props.source}#1`;
+  }
+  const [load, setload] = useState(true)
+
+  useEffect(()=>{
+    (async()=>{
+     try{
+      const response=await fetch(src, { mode: 'no-cors' })
+      setload(false);
+     }catch(err){
+      console.log(err);
+      
+     }
+    })() 
+  },[])
 
   return (
     <Card
@@ -64,8 +85,10 @@ const VideoCard = (props: Props) => {
           <CopyLink videoId={props.id} />
         </div>
         <Link href={`/dashboard/${props.workspaceId}/video/${props.id}`}>
-          <Image
-            isBlurred
+        {
+          (props.thumbnail||load)?(
+            <Image
+            isBlurred={!load}
             shadow="lg"
             radius="lg"
             width="100%"
@@ -73,6 +96,13 @@ const VideoCard = (props: Props) => {
             src={props.thumbnail}
             alt=""
           />
+          ):(
+            <div className="relative">
+              <video className="w-full absolute z-[0] opacity-[25] blur-xl  object-cover h-[140px] rounded-xl" src={src} muted controls={false}/>
+              <video className="w-full  object-cover relative z-[1] h-[140px] rounded-xl" src={src} muted controls={false}/>
+            </div>
+          )
+        }
         </Link>
       </CardBody>
       <CardFooter className="  flex flex-col items-start pt-1  px-3 z-20">

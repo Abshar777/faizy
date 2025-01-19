@@ -34,8 +34,8 @@ const Modal = ({ children, description, title, trigger, className }: Props) => {
           {trigger}
         </DialogTrigger>
       </Tooltip>
-      <DialogOverlay className="z-[999999999999999999]" />
-      <DialogContent  className=" z-[999999999999999999]">
+      <DialogOverlay className="" />
+      <DialogContent  className=" ">
         <DialogHeader>
           <DialogTitle>{title}</DialogTitle>
           <DialogDescription className="text-xs text-muted-foreground/50">

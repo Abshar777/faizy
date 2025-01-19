@@ -64,8 +64,14 @@ const ChangeVideoLocation = ({
         <Label className="flex-col gap-y-2 flex">
           <p className="text-sm">Workspaces</p>
           <Select onValueChange={(value) => setValue("workspaceId", value)}>
-            <SelectTrigger className="w-full">
-              <SelectValue placeholder={workspace?.name} />
+            <SelectTrigger onClick={()=>{
+              console.log("sjbbsjbsjb");
+              
+            }} className="w-full">
+             <p onClick={()=>{
+              console.log("sjbbsjbsjb");
+              
+            }}>anbvahvhahavhav</p>
             </SelectTrigger>
             <SelectContent>
               <SelectGroup>

@@ -93,7 +93,6 @@ export class socketHandle {
                     ContentType,
                     Body: file
                 })
-                // return ;
               
                 const fileStatus = await s3.send(Command)
                
