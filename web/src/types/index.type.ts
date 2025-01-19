@@ -177,7 +177,8 @@ export type VideoPreviewProp = {
     createdAt: Date
     processing: boolean
     summery: string,
-    thumbnail: string
+    thumbnail: string,
+    duration?:number
   }
   author: boolean
 }

@@ -8,25 +8,25 @@ datasource db {
 }
 
 model User {
-  id           String         @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
-  email        String         @unique
-  firstname    String?
-  lastname     String?
-  createdAt    DateTime       @default(now())
-  clerkid      String         @unique
-  image        String?
-  trial        Boolean        @default(false)
-  firstView    Boolean        @default(false)
-  comment      Comment[]
-  reciever     Invite[]       @relation("reciever")
-  sender       Invite[]       @relation("sender")
-  studio       Media?
-  members      Member[]
-  notification Notification[]
-  subscription Subscription?
-  videos       Video[]
-  workspace    WorkSpace[]
+  id             String           @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+  email          String           @unique
+  firstname      String?
+  lastname       String?
+  createdAt      DateTime         @default(now())
+  clerkid        String           @unique
+  image          String?
+  trial          Boolean          @default(false)
+  firstView      Boolean          @default(false)
+  comment        Comment[]
+  reciever       Invite[]         @relation("reciever")
+  sender         Invite[]         @relation("sender")
+  studio         Media?
+  members        Member[]
+  notification   Notification[]
   paymentHistory PaymentHistory[]
+  subscription   Subscription?
+  videos         Video[]
+  workspace      WorkSpace[]
 }
 
 model Comment {
@@ -53,13 +53,12 @@ model Subscription {
 }
 
 model PaymentHistory {
-  id        String    @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
-  userId    String?   @db.Uuid
-  createdAt DateTime  @default(now())
-  User      User?     @relation(fields: [userId], references: [id])
+  id          String   @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+  userId      String?  @db.Uuid
+  createdAt   DateTime @default(now())
   paymentInfo Json
+  User        User?    @relation(fields: [userId], references: [id])
 }
-
 
 model Media {
   id     String  @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
@@ -70,7 +69,6 @@ model Media {
   userId String? @unique @db.Uuid
   User   User?   @relation(fields: [userId], references: [id])
 }
-
 
 model WorkSpace {
   id        String   @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
@@ -108,6 +106,7 @@ model Video {
   summery     String?
   viewers     String[]   @default([])
   thumbnail   String     @default("")
+  duration    Float?
   Comment     Comment[]
   Folder      Folder?    @relation(fields: [folderId], references: [id], onDelete: Cascade)
   User        User?      @relation(fields: [userId], references: [id], onDelete: Cascade)
@@ -129,12 +128,9 @@ model Notification {
   userId    String?  @db.Uuid
   content   String
   createdAt DateTime @default(now())
-  User      User?    @relation(fields: [userId], references: [id])
   sender    Json?
+  User      User?    @relation(fields: [userId], references: [id])
 }
-
-
-
 
 model Invite {
   id          String     @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid

@@ -18,6 +18,9 @@ import TabMenu from "../../tabs";
 import AiTools from "../../AiTools";
 import VideoTranscript from "../../video-transcript";
 import Activities from "../../activities";
+import EditVideo from "../editVideo";
+import { config } from "dotenv";
+config();
 
 interface Props {
   videoId: string;
@@ -37,14 +40,27 @@ const VideoPreview = ({ videoId }: Props) => {
       (new Date().getTime() - new Date(video.createdAt.getTime()).getTime()) /
         (1000 * 60 * 60 * 24)
   );
+  
   if (status !== 200) router.push("/");
   const fn = {
     onPlay: () => VideoRef.current && VideoRef.current.play(),
     onPause: () => VideoRef.current && VideoRef.current.pause(),
     onTimeUpdate: (e: MediaTimeUpdateEventDetail) => {
-      VideoRef.current && (VideoRef.current.currentTime = e.currentTime);
+      if (VideoRef.current && e.currentTime !== Infinity) {
+        VideoRef.current.currentTime = e.currentTime;
+      } else {
+        if (VideoRef.current) VideoRef.current.currentTime = 0;
+      }
     },
   };
+  let src = video.source;
+  let stremUrl =
+    process.env.NEXT_PUBLIC_CLOUD_FRONT_STREAM_URL ||
+    "https://d3m6ajsnw89gp6.cloudfront.net";
+
+  if (video.title !== "Source Fight" && video.title !== "Agenet Fight") {
+    src = `${stremUrl}/${video.source}#1`;
+  }
 
   useEffect(() => {
     mutate({ videoId });
@@ -59,17 +75,17 @@ const VideoPreview = ({ videoId }: Props) => {
               <h2 className="text-white flex lg:text-4xl md:text-3xl text-2xl capitalize font-extrabold">
                 {video?.title}
               </h2>
-              <div className="flex items-center mt-2">
+              <div className="flex items-center gap-2 mt-2">
                 <p className="text-muted-foreground/80 flex  items-center gap-x-2 text-sm">
                   <FaEye className="text-md" /> {video?.views}
                 </p>
                 {author && (
                   <>
-                    {/* <EditVideo
-              videoId={videoId}
-              title={video.title as string}
-              description={video.description as string}
-            /> */}
+                    <EditVideo
+                      videoId={videoId}
+                      title={video.title as string}
+                      description={video.description as string}
+                    />
                   </>
                 )}
               </div>
@@ -82,8 +98,7 @@ const VideoPreview = ({ videoId }: Props) => {
                   preload="metadata"
                   className="w-full    h-full  opacity-50 blur-2xl    rounded-xl"
                   controls={false}
-                  crossOrigin="anonymous"
-                  src={"https://files.vidstack.io/sprite-fight/720p.mp4"}
+                  src={src}
                 />
               </div>
 
@@ -91,7 +106,8 @@ const VideoPreview = ({ videoId }: Props) => {
                 thumbnail={video?.thumbnail}
                 title={video?.title || ""}
                 fn={fn}
-                video={video?.source}
+                video={src}
+                duration={video?.duration}
               />
             </div>
             <div className="flex items-center justify-between ">

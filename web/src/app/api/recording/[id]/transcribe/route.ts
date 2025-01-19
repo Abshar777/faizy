@@ -17,7 +17,7 @@ export async function POST(req: NextRequest, { params }: { params: { id: string 
                 source: body.fileName
             },
             data: {
-                title: content.title,
+                title: body.title,
                 description: content.summary,
                 summery: body.transcript
             }

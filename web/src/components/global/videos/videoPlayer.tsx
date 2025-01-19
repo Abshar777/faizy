@@ -2,7 +2,6 @@
 import "@vidstack/react/player/styles/default/theme.css";
 import "@vidstack/react/player/styles/default/layouts/audio.css";
 import "@vidstack/react/player/styles/default/layouts/video.css";
-
 import { MediaPlayer, MediaProvider } from "@vidstack/react";
 import {
   DefaultVideoLayout,
@@ -14,34 +13,15 @@ interface Props {
   fn: Record<string, Function>;
   thumbnail: string;
   title: string;
+  duration?:number
 }
 
-const textTracks = [
-  {
-    src: "https://files.vidstack.io/sprite-fight/subs/english.vtt",
-    label: "English",
-    language: "en-US",
-    kind: "subtitles",
-    type: "vtt",
-    default: true,
-  },
-  {
-    src: "https://files.vidstack.io/sprite-fight/subs/spanish.vtt",
-    label: "Spanish",
-    language: "es-ES",
-    kind: "subtitles",
-    type: "vtt",
-  },
-  {
-    src: "https://files.vidstack.io/sprite-fight/chapters.vtt",
-    language: "en-US",
-    kind: "chapters",
-    type: "vtt",
-    default: true,
-  },
-];
 
-const VideoPlayer = ({ video, fn, thumbnail, title }: Props) => {
+
+const VideoPlayer = ({ video, fn, thumbnail, title,duration }: Props) => {
+  let type:any="video/"+video?.split('.')?.pop()?.split('#')?.[0]||"mp4";
+  
+  
   return (
     <MediaPlayer
       onTimeUpdate={(e) => {
@@ -54,16 +34,18 @@ const VideoPlayer = ({ video, fn, thumbnail, title }: Props) => {
         fn.onPause();
       }}
       className=" rounded-lg aspect-video z-[0] object-cover relative"
-      src={video}
+      src={{src:video,type:type}}
       viewType="video"
       streamType="on-demand"
       logLevel="warn"
-      crossOrigin
+      
       playsInline
       fullscreenOrientation="landscape"
-
       title={title}
       poster={thumbnail}
+      {...(duration)&&{
+        duration:duration/1000000+1
+      }}
     >
       <MediaProvider></MediaProvider>
       <DefaultVideoLayout icons={defaultLayoutIcons} />

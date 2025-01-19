@@ -22,6 +22,7 @@ export async function POST(req: NextRequest, { params }: { params: { id: string 
             },
             data: {
               processing: false,
+              duration:body.duration
             },
           })
     if (completeProcessing) {

@@ -43,6 +43,7 @@ export const getPreviewVideo = async (videoId: string) => {
         views: true,
         summery: true,
         thumbnail: true,
+        duration:true,
 
         User: {
           select: {
@@ -77,7 +78,9 @@ export const getPreviewVideo = async (videoId: string) => {
 export const editVideoInfo = async (
   videoId: string,
   title: string,
-  description: string
+  description: string,
+  thumbnail:string,
+  summary?:string
 ) => {
   try {
     const video = await client.video.update({
@@ -85,6 +88,7 @@ export const editVideoInfo = async (
       data: {
         title,
         description,
+        thumbnail,
       },
     })
     if (video) return { status: 200, data: 'Video successfully updated' }
@@ -217,3 +221,6 @@ export const getVideoComments = async (Id: string) => {
     return { status: 400 }
   }
 }
+
+
+

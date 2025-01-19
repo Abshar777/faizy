@@ -14,6 +14,8 @@ export const createTranscription = async (fileName: string, userId: string) => {
                 audio: file,
                 speaker_labels: true
             }
+           
+            
             const run = async () => {
                 const transcript = await assemblyClient.transcripts.transcribe(params)
 
@@ -21,8 +23,6 @@ export const createTranscription = async (fileName: string, userId: string) => {
                     console.error(`Transcription failed: ${transcript.error}`)
                     // process.exit(1)
                 }
-
-                console.log(transcript.text, '   text')
                 const text = transcript.text;
                 const title = text?.split(".")?.[0] || "Untitled";
                 const json = JSON.stringify({
@@ -34,7 +34,8 @@ export const createTranscription = async (fileName: string, userId: string) => {
                         const transcriptionGenrated = await axios.post(`${process.env.NEXT_API_HOST}recording/${userId}/transcribe`, {
                             fileName: fileName.split(".")[0] + ".webm",
                             content: text,
-                            transcript: json
+                            transcript: json,
+                            title
                         })
                         return json
                     } catch (error) {
