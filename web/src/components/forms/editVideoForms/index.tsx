@@ -4,7 +4,7 @@ import ImageUploader from "@/components/global/imageUploader";
 import { DialogClose } from "@/components/ui/dialog";
 import { useEditVideo } from "@/hooks/useEditVideo";
 import { Button } from "@nextui-org/button";
-import React from "react";
+import React, { useEffect } from "react";
 
 interface Props {
   videoId: string;
@@ -30,14 +30,22 @@ const EditVideoForm = ({
     videoId,
     title,
     description,
-    thumbnail,
     onSubmit
   );
+  // console.log(thumbnail,"thumbnail");
+  let thumbnailLink=thumbnail
+  let stremUrl =
+    process.env.NEXT_PUBLIC_CLOUD_FRONT_STREAM_URL ||
+    "https://d3m6ajsnw89gp6.cloudfront.net";
+
+  if (title !== "Source Fight" && title !== "Agenet Fight") {
+   if(thumbnailLink) thumbnailLink=`${stremUrl}/${thumbnail}`
+  }
   
   return (
     <form className="flex flex-col w-full gap-5" onSubmit={onFormSubmit}>
         <div className="w-full">
-            <ImageUploader setValues={setValue} thumbnail={thumbnail} errors={errors} name="thumbnail" register={register}/>
+            <ImageUploader setValues={setValue} thumbnail={thumbnailLink} errors={errors} name="thumbnail" register={register}/>
         </div>
       <div className="w-full -mt-4">
         <FormGenerator

@@ -24,12 +24,8 @@ export default function ImageUploader({
   const [selectedImage, setSelectedImage] = useState<string | null>(
     thumbnail || null
   );
-  const [showModal, setShowModal] = useState(false);
   const fileInputRef = useRef<HTMLInputElement>(null);
 
-  useEffect(() => { 
-    setValues(name, selectedImage)
-  },[selectedImage])
 
   useEffect(() => {
     const handlePaste = (e: ClipboardEvent) => {
@@ -60,6 +56,7 @@ export default function ImageUploader({
   const handleImageChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files?.[0];
     if (file) {
+      setValues(name, file)
       const reader = new FileReader();
       reader.onloadend = () => {
         setSelectedImage(reader.result as string);

@@ -11,6 +11,7 @@
   "dependencies": {
     "@aws-sdk/client-s3": "^3.731.0",
     "@aws-sdk/lib-storage": "^3.731.0",
+    "@types/multer": "^1.4.12",
     "assemblyai": "^4.8.0",
     "aws-sdk": "^2.1692.0",
     "axios": "^1.7.9",
@@ -23,6 +24,7 @@
     "get-audio-duration": "^4.0.1",
     "get-video-duration": "^4.1.0",
     "hound": "^1.0.5",
+    "multer": "^1.4.5-lts.1",
     "music-metadata": "^10.7.0",
     "openai": "^4.79.1",
     "socket.io": "^4.8.1",

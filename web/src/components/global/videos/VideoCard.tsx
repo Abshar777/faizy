@@ -43,12 +43,14 @@ const VideoCard = (props: Props) => {
       (1000 * 60 * 60 * 24)
   );
   let src = props.source;
+  let thumbnail=props.thumbnail
   let stremUrl =
     process.env.NEXT_PUBLIC_CLOUD_FRONT_STREAM_URL ||
     "https://d3m6ajsnw89gp6.cloudfront.net";
 
   if (props.title !== "Source Fight" && props.title !== "Agenet Fight") {
     src = `${stremUrl}/${props.source}#1`;
+   if(thumbnail) thumbnail=`${stremUrl}/${props.thumbnail}`
   }
   const [load, setload] = useState(true)
 
@@ -70,10 +72,11 @@ const VideoCard = (props: Props) => {
       key={1}
       className=" hover:bg-muted-foreground/20 group relative bg-muted-foreground/5 cursor-pointer transition duration-150  justify-between  items-center gap-2"
       onMouseDown={onClick}
+      isDisabled={props.processing}
     >
       <Ripple onClear={onClear} ripples={ripples} />
       <CardBody className="overflow-visible relative p-[.3rem]">
-        <div className="absolute top-3 right-3  z-50  gap-x-3 flex">
+        <div className="absolute top-3 right-3  z-[2]  gap-x-3 flex">
           <VideoCardMenu
             currentFolderName={props.Folder?.name || ""}
             videoId={props.id}
@@ -81,19 +84,19 @@ const VideoCard = (props: Props) => {
             currentFolder={props.Folder?.id || ""}
           />
         </div>
-        <div className="absolute z-50 bottom-3 left-3">
+        <div className="absolute z-[2] bottom-3 left-3">
           <CopyLink videoId={props.id} />
         </div>
         <Link href={`/dashboard/${props.workspaceId}/video/${props.id}`}>
         {
-          (props.thumbnail||load)?(
+          (thumbnail||load||props.processing)?(
             <Image
             isBlurred={!load}
             shadow="lg"
             radius="lg"
             width="100%"
-            className="w-full  object-cover h-[140px] "
-            src={props.thumbnail}
+            className="w-full relative z-[1]  object-cover h-[140px] "
+            src={thumbnail}
             alt=""
           />
           ):(
@@ -105,7 +108,7 @@ const VideoCard = (props: Props) => {
         }
         </Link>
       </CardBody>
-      <CardFooter className="  flex flex-col items-start pt-1  px-3 z-20">
+      <CardFooter className="  flex flex-col items-start pt-1  px-3 z-[2]">
         <Link className="w-full" href={`/dashboard/${props.workspaceId}/video/${props.id}`}>
           <h2 className="text-sm capitalize  font-semibold text-[#BDBDBD]">
             {props.title}

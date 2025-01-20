@@ -43,7 +43,7 @@ export const getPreviewVideo = async (videoId: string) => {
         views: true,
         summery: true,
         thumbnail: true,
-        duration:true,
+        duration: true,
 
         User: {
           select: {
@@ -79,23 +79,28 @@ export const editVideoInfo = async (
   videoId: string,
   title: string,
   description: string,
-  thumbnail?:File,
-  summary?:string
+  thumbnail?: string,
 ) => {
   // wire up edit video thumbnail upload to s3
+  
+ console.log("kerri");
+ 
+ 
+
   try {
     const video = await client.video.update({
       where: { id: videoId },
       data: {
         title,
         description,
-        
+        thumbnail: thumbnail
       },
     })
     if (video) return { status: 200, message: 'Video successfully updated' }
     return { status: 404, message: 'Video not found' }
   } catch (error) {
-    return { status: 400 }
+    console.log('Oops! something went wrong err'+(error as Error).message)
+    return { status: 400 ,message: 'Oops! something went wrong err'+(error as Error).message }
   }
 }
 

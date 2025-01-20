@@ -44,7 +44,7 @@ const Videos = ({ folderId, workspaceId, videosKey }: Props) => {
         className={
           cn(videoStatus != 200
             ? "p-5 w-full flex justify-center "
-            : "grid  grid-cols-2  gap-x-5 gap-y-5 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-6 ")
+            : "grid  grid-cols-1  gap-x-5 gap-y-5 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-6 ")
         }
       >
         {videoStatus !== 200 ? (

@@ -85,6 +85,7 @@ const VideoPreview = ({ videoId }: Props) => {
                       videoId={videoId}
                       title={video.title as string}
                       description={video.description as string}
+                      thumbnail={video.thumbnail as string}
                     />
                   </>
                 )}

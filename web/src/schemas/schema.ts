@@ -6,5 +6,13 @@ export const editVideoInfoSchema = z.object({
   description: z.string().min(20, {
     message: 'Video description must have atleast 20 characters',
   }),
-
+  thumbnail: z
+    .union([
+      z.instanceof(File).refine(
+        (file) => file.type.startsWith("image/"),
+        { message: "Only image files are allowed." }
+      ),
+      z.undefined(),
+    ])
+    .optional(),
 })
