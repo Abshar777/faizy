@@ -266,7 +266,7 @@ const Sidebar = ({ activeWorkspaceId }: Props) => {
   );
   return (
     <div className="full">
-      <InfoBar />
+      <InfoBar workspaceId={activeWorkspaceId}/>
       <div className="md:hidden z-[999999999999999999] fixed my-4">
         <Sheet open={isOpen} onOpenChange={open => open ? handleOpen() : handleClose()}>
           <SheetTrigger asChild className="ml-2">

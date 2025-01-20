@@ -44,7 +44,7 @@ const VideoPlayer = ({ video, fn, thumbnail, title,duration }: Props) => {
       title={title}
       poster={thumbnail}
       {...(duration)&&{
-        duration:duration/1000000+1
+        duration:duration/10+1
       }}
     >
       <MediaProvider></MediaProvider>

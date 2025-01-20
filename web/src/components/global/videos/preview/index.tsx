@@ -99,7 +99,7 @@ const VideoPreview = ({ videoId }: Props) => {
                   muted
                   ref={VideoRef}
                   preload="metadata"
-                  className="w-full    h-full  opacity-[25] blur-2xl    rounded-xl"
+                  className="w-full    h-full  opacity-[25%] blur-2xl    rounded-xl"
                   controls={false}
                   src={src}
                 />

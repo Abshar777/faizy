@@ -6,10 +6,17 @@ import { UserButton } from "@clerk/nextjs";
 import { Tooltip } from "@nextui-org/tooltip";
 import { Search, UploadIcon } from "lucide-react";
 import React from "react";
+import { useRouter } from "nextjs-toploader/app";
 
-type Props = {};
+type Props = {
+  workspaceId: string;
+};
 
 const InfoBar = (props: Props) => {
+  const router = useRouter();
+  const redirectToRecorder = () => {
+    router.push(`/dashboard/${props.workspaceId}/recorder`);
+  };
   return (
     <header className="pl-20 md:pl-[265px] bg-primary-foreground/80 backdrop-blur-xl z-[10]  fixed py-4 px-3 -ml-2 w-full flex items-center justify-between gap-4">
       <div className="flex gap-4  justify-center items-center border-2 rounded-full px-4 w-full max-w-lg">
@@ -39,7 +46,10 @@ const InfoBar = (props: Props) => {
           placement="bottom"
           classNames={{ arrow: "rounded-none" }}
         >
-          <Button className="bg-muted-foreground md:flex hidden  items-center gap-2">
+          <Button
+            onClick={redirectToRecorder}
+            className="bg-muted-foreground md:flex hidden  items-center gap-2"
+          >
             <VideoRecorderIcon />
             <span className="flex items-center gap-2">Record</span>
           </Button>
