@@ -107,6 +107,7 @@ model Video {
   viewers     String[]   @default([])
   thumbnail   String     @default("")
   duration    Float?
+  isArchive   Boolean    @default(false)
   Comment     Comment[]
   Folder      Folder?    @relation(fields: [folderId], references: [id], onDelete: Cascade)
   User        User?      @relation(fields: [userId], references: [id], onDelete: Cascade)

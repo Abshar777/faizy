@@ -103,6 +103,7 @@ export class socketHandle {
                     fileName: data.fileName,
                     duration: this.duration
                 })
+                this.duration=0;
                 if (stopProcessing.status == 200) {
                     fs.unlinkSync(path.join(TEMPDIR + "/video/", data.fileName));
                     console.log("video file deleted succefully 🟢");

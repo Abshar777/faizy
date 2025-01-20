@@ -20,6 +20,7 @@ import VideoTranscript from "../../video-transcript";
 import Activities from "../../activities";
 import EditVideo from "../editVideo";
 import { config } from "dotenv";
+import DeleteVideo from "../deleteVideo";
 config();
 
 interface Props {
@@ -87,6 +88,7 @@ const VideoPreview = ({ videoId }: Props) => {
                       description={video.description as string}
                       thumbnail={video.thumbnail as string}
                     />
+                    <DeleteVideo workspaceId={video.workSpaceId} title={video.title as string} videoID={videoId} />
                   </>
                 )}
               </div>

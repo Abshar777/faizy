@@ -6,7 +6,7 @@ export async function POST(req: NextRequest, { params }: { params: { id: string 
    
     try {
         const body = await req.json();
-
+        console.log(body.duration,"duration")
         const { id } = params;
 
         const user=await client.user.findUnique({

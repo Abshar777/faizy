@@ -178,7 +178,8 @@ export type VideoPreviewProp = {
     processing: boolean
     summery: string,
     thumbnail: string,
-    duration?:number
+    duration?:number,
+    workSpaceId: string 
   }
   author: boolean
 }

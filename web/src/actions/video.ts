@@ -44,6 +44,7 @@ export const getPreviewVideo = async (videoId: string) => {
         summery: true,
         thumbnail: true,
         duration: true,
+        workSpaceId: true,
 
         User: {
           select: {
@@ -81,12 +82,6 @@ export const editVideoInfo = async (
   description: string,
   thumbnail?: string,
 ) => {
-  // wire up edit video thumbnail upload to s3
-  
- console.log("kerri");
- 
- 
-
   try {
     const video = await client.video.update({
       where: { id: videoId },
@@ -99,8 +94,20 @@ export const editVideoInfo = async (
     if (video) return { status: 200, message: 'Video successfully updated' }
     return { status: 404, message: 'Video not found' }
   } catch (error) {
-    console.log('Oops! something went wrong err'+(error as Error).message)
-    return { status: 400 ,message: 'Oops! something went wrong err'+(error as Error).message }
+    console.log('Oops! something went wrong err' + (error as Error).message)
+    return { status: 400, message: 'Oops! something went wrong err' + (error as Error).message }
+  }
+}
+
+export const deleteVideo = async (videoId: string) => {
+  try {
+    const video = await client.video.delete({
+      where: { id: videoId },
+    })
+    if (video) return { status: 200, message: 'Video deleted successfully' }
+    return { status: 404, message: 'Video not found' }
+  } catch (error) {
+    return { status: 400, message: 'Oops! something went wrong' }
   }
 }
 
