@@ -4,7 +4,7 @@ export const editVideoInfoSchema = z.object({
     .string()
     .min(5, { message: 'Video title must have atleast 5 characters' }),
   description: z.string().min(20, {
-    message: 'Video description must have atleast 100 characters',
+    message: 'Video description must have atleast 20 characters',
   }),
-  thumbnail: z.string().url({ message: 'Thumbnail must be a valid URL' })
+
 })

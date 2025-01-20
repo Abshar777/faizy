@@ -135,7 +135,7 @@ function createWindow() {
   floatingWebCam.webContents.on('did-finish-load', () => {
     floatingWebCam?.webContents.send('main-process-message', (new Date).toLocaleString())
   })
-  floatingWebCam?.close()
+  // floatingWebCam?.close()
   // floatingWebCam?.hide();
   win.setVisibleOnAllWorkspaces(true, { visibleOnFullScreen: true });
   // win.setAlwaysOnTop(true, 'screen-saver', 1);

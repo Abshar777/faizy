@@ -96,7 +96,7 @@ const VideoPreview = ({ videoId }: Props) => {
                   muted
                   ref={VideoRef}
                   preload="metadata"
-                  className="w-full    h-full  opacity-50 blur-2xl    rounded-xl"
+                  className="w-full    h-full  opacity-[25] blur-2xl    rounded-xl"
                   controls={false}
                   src={src}
                 />
@@ -176,7 +176,7 @@ const VideoPreview = ({ videoId }: Props) => {
           >
             <section className="py-5 w-full">
               <AiTools plan="PRO" trial={false} videoId={videoId} />
-              <VideoTranscript transcript={video?.description as string} />
+              <VideoTranscript transcript={video?.summery as string} />
               <Activities
                 videoId={videoId}
                 author={video?.User?.firstname as string}

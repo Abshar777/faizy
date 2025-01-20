@@ -103,7 +103,6 @@ function createWindow() {
   floatingWebCam.webContents.on("did-finish-load", () => {
     floatingWebCam == null ? void 0 : floatingWebCam.webContents.send("main-process-message", (/* @__PURE__ */ new Date()).toLocaleString());
   });
-  floatingWebCam == null ? void 0 : floatingWebCam.close();
   win.setVisibleOnAllWorkspaces(true, { visibleOnFullScreen: true });
   studio.setVisibleOnAllWorkspaces(true, { visibleOnFullScreen: true });
   studio.setAlwaysOnTop(true, "screen-saver", 1);

@@ -64,14 +64,8 @@ const ChangeVideoLocation = ({
         <Label className="flex-col gap-y-2 flex">
           <p className="text-sm">Workspaces</p>
           <Select onValueChange={(value) => setValue("workspaceId", value)}>
-            <SelectTrigger onClick={()=>{
-              console.log("sjbbsjbsjb");
-              
-            }} className="w-full">
-             <p onClick={()=>{
-              console.log("sjbbsjbsjb");
-              
-            }}>anbvahvhahavhav</p>
+            <SelectTrigger className="w-full">
+              <SelectValue placeholder={workspace?.name} />
             </SelectTrigger>
             <SelectContent>
               <SelectGroup>
@@ -128,8 +122,11 @@ const ChangeVideoLocation = ({
       <Button
         disabled={!isFolders || isFolders.length == 0}
         isLoading={isPending}
-        className={cn("bg-secondary-foreground text-secondary font-semibold ",
-          (!isFolders || isFolders.length == 0)?"opacity-40 hover:opacity-25 disabled:opacity-45 disabled:hover:opacity-25":"hover:bg-secondary-foreground/80"
+        className={cn(
+          "bg-secondary-foreground text-secondary font-semibold ",
+          !isFolders || isFolders.length == 0
+            ? "opacity-40 hover:opacity-25 disabled:opacity-45 disabled:hover:opacity-25"
+            : "hover:bg-secondary-foreground/80"
         )}
         type="submit"
       >

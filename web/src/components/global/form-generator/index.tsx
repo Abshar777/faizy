@@ -119,10 +119,15 @@ const FormGenerator = ({
 
     case "textarea":
       return (
-        <Label className="flex flex-col gap-2" htmlFor={`input-${label}`}>
+        <Label className="flex flex-col gap-2 text-[#9D9D9D]" htmlFor={`input-${label}`}>
           {label && label}
           <Textarea
-            className="bg-transparent border-themeGray text-themeTextGray"
+               className={cn(
+                className,
+                `focus:bg-background/20 placeholder:text-muted-foreground/30 bg-primary-foreground ${
+                  errors[name] && "errInput"
+                } border-themeGray text-themeTextGray`
+              )}
             id={`input-${label}`}
             placeholder={placeholder}
             rows={lines}

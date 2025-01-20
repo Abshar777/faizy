@@ -79,20 +79,21 @@ export const editVideoInfo = async (
   videoId: string,
   title: string,
   description: string,
-  thumbnail:string,
+  thumbnail?:File,
   summary?:string
 ) => {
+  // wire up edit video thumbnail upload to s3
   try {
     const video = await client.video.update({
       where: { id: videoId },
       data: {
         title,
         description,
-        thumbnail,
+        
       },
     })
-    if (video) return { status: 200, data: 'Video successfully updated' }
-    return { status: 404, data: 'Video not found' }
+    if (video) return { status: 200, message: 'Video successfully updated' }
+    return { status: 404, message: 'Video not found' }
   } catch (error) {
     return { status: 400 }
   }

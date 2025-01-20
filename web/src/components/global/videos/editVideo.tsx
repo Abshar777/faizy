@@ -3,6 +3,7 @@ import Modal from "../modal";
 import { Button } from "@nextui-org/button";
 import { TbEditCircle } from "react-icons/tb";
 import ChangeVideoLocation from "@/components/forms/changeVideoLoactionForm";
+import EditVideoForm from "@/components/forms/editVideoForms";
 
 interface Props {
   videoId: string;
@@ -29,7 +30,7 @@ const EditVideo = ({
         </Button>
       }
     >
-      <></>
+     <EditVideoForm videoId={videoId} title={title} description={description} thumbnail={thumbnail} summery={summery} />
     </Modal>
   );
 };
