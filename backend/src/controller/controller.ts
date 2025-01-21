@@ -59,7 +59,7 @@ export class socketHandle {
     async handleProccesingAudioFile(data: TprocessVideo) {
         try {
 
-            console.log("🟠 proccesing audio started")
+            console.log("🟠 proccesing audio started",data)
             this.audioRecorderdedChunks = [];
             const processing = await axios.post(`${process.env.NEXT_API_HOST}recording/${data.userId}/processing`, {
                 fileName: data.fileName.split(".")[0] + ".webm"

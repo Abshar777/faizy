@@ -8,6 +8,7 @@ import axios from "axios";
 
 
 export const createTranscription = async (fileName: string, userId: string) => {
+    
     return fs.readFile(path.join(TEMPDIR + "/audio/", fileName), async (err, file) => {
         if (!err) {
             const params = {

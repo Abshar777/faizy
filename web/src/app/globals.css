@@ -92,6 +92,9 @@
 .fade-layer-right{
   mask-image: linear-gradient(to right, rgba(0, 0, 0, 0), rgba(0, 0, 0, 1) 20%);
 }
+::-webkit-scrollbar{
+  width: 0;
+}
 
 .text-radial {
   background-image: radial-gradient(
