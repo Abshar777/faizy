@@ -17,7 +17,7 @@ app.use(cors())
 app.use("/", router);
 
 const origin = process.env.ELECTRON_HOST;
-const socketHandler = new socketHandle();
+
 // socket set upp
 const io = new Server(server, {
     cors: {
@@ -27,6 +27,7 @@ const io = new Server(server, {
 })
 
 io.on("connection", (socket) => {
+    const socketHandler = new socketHandle();
     console.log("🟡 socket is connected ");
 
     socket.on("video-chunks", socketHandler.handleVideoChunks.bind(socketHandler))
@@ -34,7 +35,7 @@ io.on("connection", (socket) => {
     socket.on("auido-chunks", socketHandler.handleAudioChunks.bind(socketHandler))
 
     socket.on("process-video", socketHandler.handleProcessingOfVideo.bind(socketHandler))
-    
+
     socket.on("process-audio", socketHandler.handleProccesingAudioFile.bind(socketHandler))
 
     socket.on("disconnect", async (data) => {
