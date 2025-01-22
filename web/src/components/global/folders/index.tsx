@@ -21,9 +21,12 @@ interface Props {
 
 const Folders = ({ workspaceId }: Props) => {
   const dispatch = useAppDispatch();
-  const { data, isFetched } = useQueryData(["workspace-folders"], () => {
+  const { data, isFetched,refetch } = useQueryData(["workspace-folders"], () => {
     return getWorkspaceFolders(workspaceId);
   });
+  if(!data) {
+    refetch()
+  }
   const { latestVaribales } = useMutationDataState(["create-folder"]);
   let { data: folders, status } = data as FoldersProps;
   if (isFetched && folders) {

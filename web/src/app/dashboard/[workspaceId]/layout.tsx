@@ -14,6 +14,8 @@ import {
 } from "@tanstack/react-query";
 import Sidebar from "@/components/global/sidebar";
 import GlobalHeader from "@/components/global/globalHeader";
+import { headers } from "next/headers";
+import { cn } from "@/lib/utils";
 
 interface Props {
   params: {
@@ -23,10 +25,13 @@ interface Props {
 }
 
 const layout = async ({ children, params: { workspaceId } }: Props) => {
+
+
   const auth = await onAuthenticateUser();
   if (!auth.data?.workspace) return redirect("/auth/sign-in");
   if (!auth.data.workspace.length) return redirect("/auth/sign-in");
   const hasAcces = await verfyAccessToWorkSapce(workspaceId);
+
   if (hasAcces.status !== 200)
     return redirect(`/dashboard/${auth.data.workspace[0].id}`);
   if (!hasAcces.data?.workspace) return null;
@@ -64,7 +69,7 @@ const layout = async ({ children, params: { workspaceId } }: Props) => {
         <div className="w-full pt-28 p-6 overflow-y-scroll overflow-x-hidden">
           <GlobalHeader workspace={hasAcces.data.workspace} />
         
-          <div className="mt-4 h-full">{children}</div>
+          <div className={cn("mt-4")}>{children}</div>
         </div>
       </div>
     </HydrationBoundary>

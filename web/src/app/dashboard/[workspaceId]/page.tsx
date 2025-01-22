@@ -1,9 +1,8 @@
 "use client"
 import CreateWorkspace from "@/components/global/createWorkspace";
 import CreateFolder from "@/components/global/createFolder";
-import { Tabs, TabsList, TabsTrigger } from "@/components/ui/tabs";
+import { Tabs, TabsList, TabsTrigger,TabsContent } from "@/components/ui/tabs";
 import React from "react";
-import { TabsContent } from "@radix-ui/react-tabs";
 import Folders from "@/components/global/folders";
 
 interface Props {

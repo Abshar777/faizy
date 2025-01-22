@@ -10,6 +10,7 @@ interface Props {
 const GlobalHeader = ({workspace}: Props) => {
     const pathName=usePathname().split(`/dashboard/${workspace.id}/`)[1]
     const isVideoOrFolder=pathName&&(pathName.includes("video")||pathName.includes("folder"))
+    // if(pathName=="home") return null;
     return (
        <article className='flex flex-col gap-2'>
         <span className='text-muted-foreground/50'>{workspace.type.toLocaleLowerCase()} </span>

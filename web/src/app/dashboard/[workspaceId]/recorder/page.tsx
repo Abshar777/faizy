@@ -136,7 +136,7 @@ const Page = (props: Props) => {
   }, [record]);
 
   return (
-    <div className="w-full flex flex-col gap-1 h-full mt-2 p-2">
+    <div className="w-full flex flex-col gap-1 h-[80vh] mt-2 p-2">
       <div className="w-full h-[80%] p-2 relative flex items-center justify-center aspect-video overflow-hidden rounded-lg">
         <div className="absolute z-[0] w-full bg-background/20 h-full"></div>
         <video
